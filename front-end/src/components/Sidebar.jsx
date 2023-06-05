@@ -17,7 +17,6 @@ import {
 
 import NavItem from '../components/NavItem'
 
-import React from 'react'
 
 const Sidebar = () => {
     const [navSize, changeNavSize] = useState("large")
