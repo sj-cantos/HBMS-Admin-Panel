@@ -9,8 +9,10 @@ import {
     MenuList
 } from '@chakra-ui/react'
 import NavHoverBox from '../components/NavHoverBox'
+import {Link as ReactRouterLink} from 'react-router-dom'
 
-export default function NavItem({ icon, title, description, active, navSize }) {
+
+export default function NavItem({ icon, title, description, active, navSize,to }) {
     return (
         <Flex
             mt={30}
@@ -20,6 +22,8 @@ export default function NavItem({ icon, title, description, active, navSize }) {
         >
             <Menu placement="right">
                 <Link
+                    as={ReactRouterLink}
+                    to = {to}
                     backgroundColor={active && "#AEC8CA"}
                     p={3}
                     borderRadius={8}

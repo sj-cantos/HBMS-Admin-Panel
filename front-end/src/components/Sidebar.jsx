@@ -51,10 +51,10 @@ const Sidebar = () => {
                             changeNavSize("small")
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." />
-                <NavItem navSize={navSize} icon={FiCalendar} title="Bookings" />
-                <NavItem navSize={navSize} icon={FiUser} title="Rooms" />
-                <NavItem navSize={navSize} icon={FiPieChart} title="Analytics" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" to={'/'} description="This is the description for the dashboard." />
+                <NavItem navSize={navSize} icon={FiCalendar} title="Bookings" to={'/bookings'} />
+                <NavItem navSize={navSize} icon={FiUser} title="Rooms" to={'/rooms'} />
+                <NavItem navSize={navSize} icon={FiPieChart} title="Analytics" to={'/analytics'}/>
                 
             </Flex>
 
