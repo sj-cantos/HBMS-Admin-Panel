@@ -1,13 +1,18 @@
 const express = require('express');
-
 const app = express();
-const port = 3003;
 
-app.get('/', (req,res)=>{
-    res.send("hello");
-})
+require('dotenv').config();
 
-app.listen(port, ()=>{
+const PORT = process.env.PORT || 3003;
+require('./shownet')(PORT);
 
-    console.log("app is listening at ", port)
-})
+app.use(express.json());
+app.use(express.urlencoded( { extended: true }));
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// routes section
+app.use('/', require('./routes/Login'));
+
