@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 
 require('dotenv').config();
@@ -6,6 +7,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3003;
 require('./shownet')(PORT);
 
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded( { extended: true }));
 
@@ -14,5 +16,9 @@ app.listen(PORT, () => {
 });
 
 // routes section
-app.use('/', require('./routes/Login'));
+app.use('/', require('./routes/Authenticate'));
+app.use('/', require('./routes/Booking'));
+app.use('/', require('./routes/Dashboard'));
+app.use('/', require('./routes/Reports'));
+app.use('/', require('./routes/Rooms'));
 
