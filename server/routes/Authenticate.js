@@ -4,29 +4,28 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const crypto = require('crypto');
 const pool = require('../database');
-const path = require('path');
+
+const checkAuth = require('./CheckAuth');
 
 // ----------------------- login route ----------------------- 
 
 authenticate.get('/', (req, res) => {
+  // send the built react app html file here during production.
   res.sendFile('basic-login.html', { root: './public'});
+});
+
+authenticate.get('/success', checkAuth, (req, res) => {
+  res.status(200).json({ msg: 'Login Success', code: 401 })
+});
+
+authenticate.get('/failed', checkAuth, (req, res) => {
+  res.status(401).json({ msg: 'Loging Failed', code: 401 })
 });
 
 authenticate.post('/', passport.authenticate('local', {
   successRedirect: '/login/success',
-  failureRedirect: '/login/failure'
+  failureRedirect: '/login/failed'
 }));
-
-// authenticate.post('/', function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info, status) {
-//     if (err) { 
-//       return next(err)
-//     } else if (!user) {
-//       return res.status(401).json({ msg: 'Loging Failed', code: 401 })
-//     }
-//     return res.status(200).json({ msg: 'Login Successful', code: 200 })
-//   })(req, res, next);
-// });
 
 // ----------------------- passport-local setup ----------------------- 
 passport.use(new LocalStrategy(function verify(username, password, callback) {
