@@ -1,8 +1,12 @@
 const express = require('express');
-
 const app = express();
 
 require('dotenv').config();
+
+const helmet = require('helmet');
+app.use(helmet());
+
+app.disable('x-powered-by');
 
 const PORT = process.env.PORT || 3003;
 require('./shownet')(PORT);
