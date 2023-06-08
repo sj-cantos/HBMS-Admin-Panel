@@ -8,7 +8,8 @@
 </head>
 <body>
     <form action="/login" method="post">
-        <input name="id" type="text" required placeholder="Admin Username"><br><br>
+        <!-- post request strictly should have a 'username' and 'password' as name -->
+        <input name="username" type="text" required placeholder="Admin Username"><br><br>
         <input name="password" type="password" required placeholder="Password"><br><br>
         <button type="submit">Login</button>
     </form>

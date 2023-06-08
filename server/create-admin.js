@@ -48,14 +48,16 @@ function createAdminAccount() {
       process.exit();
     } else {
       const sha512HashedBase64String = hashedPassword.toString('base64');
-      
+      const slatBase64String = salt.toString('base64');
+
       pool.getConnection((err, connection) => {
         if (err) {
           console.error('error getting a connection in the connection pool');
         } else {
           const createAdminUserTable = `create table if not exists admin_users (
             id VARCHAR(30) PRIMARY KEY,
-            hash VARCHAR(88)
+            hash VARCHAR(88),
+            salt VARCHAR(24)
           )`;
   
           connection.execute(createAdminUserTable, (err) => {
@@ -63,9 +65,10 @@ function createAdminAccount() {
               connection.close();
               console.error('error creating admin user table');
             } else {
-              connection.execute('INSERT INTO `admin_users` (`id`, `hash`) VALUES (?, ?)', [
+              connection.execute('INSERT INTO `admin_users` (`id`, `hash`, `salt`) VALUES (?, ?, ?)', [
                 admin.username,
-                sha512HashedBase64String
+                sha512HashedBase64String,
+                slatBase64String
               ], (err) => {
                 if (err) {
                   console.error('error creating a new admin user : ', err.message);
