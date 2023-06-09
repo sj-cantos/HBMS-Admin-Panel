@@ -9,68 +9,67 @@ const checkAuth = require('./CheckAuth');
 
 // ----------------------- login route ----------------------- 
 
+// localhost:PORT/login
 authenticate.get('/', (req, res) => {
   // send the built react app html file here during production.
   res.sendFile('basic-login.html', { root: './public'});
 });
 
-authenticate.get('/success', checkAuth, (req, res) => {
-  res.status(200).json({ msg: 'Login Success', code: 401 })
+// localhost:PORT/login
+authenticate.post('/', passport.authenticate('local'), function(req, res) {
+  res.json({ msg: "Login Success", code: 200 });
 });
 
-authenticate.get('/failed', checkAuth, (req, res) => {
-  res.status(401).json({ msg: 'Loging Failed', code: 401 })
+// localhost:PORT/login/signout
+authenticate.delete('/signout', checkAuth, (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    } else {
+      res.status(200).json({ msg: 'Successfully logged out', code: 200 });
+    }
+  });
 });
-
-authenticate.post('/', passport.authenticate('local', {
-  successRedirect: '/login/success',
-  failureRedirect: '/login/failed'
-}));
 
 // ----------------------- passport-local setup ----------------------- 
 passport.use(new LocalStrategy(function verify(username, password, callback) {
-  console.debug('Authenticate.js: passport auth loaded');
   pool.execute('SELECT * FROM `admin_users` WHERE id = ?', [username], (err, result) => {
     if (err) {
-      console.debug('Authenticate.js: error in sql query');
       return callback(err); 
     } else if (result.length === 0) {
-      console.debug('Authenticate.js: user not found');
       return callback(null, false, { message: 'That user admin does not exists in the database'}); // for dev only
       // return callback(null, false, { message: 'Incorrect username or password'}); // for release
     } else if (result.length > 1) {
-      console.debug('Authenticate.js: error in sql broken table');
       return callback(null, false, { message: 'That was not supposed to happen, the database table might be broken'}); // for dev only
     }
 
     crypto.pbkdf2(Buffer.from(password, 'utf-8').toString(), Buffer.from(result[0].salt, 'base64'), 200000, 64, 'sha512', function(err, hashedPassword) {
       if (err) {
-        console.debug('Authenticate.js: hashing error');
         return callback(err);
       } else if (!crypto.timingSafeEqual(hashedPassword, Buffer.from(result[0].hash, 'base64'))) {
-        console.debug('Authenticate.js: hash did not match');
         return callback(null, false, { message: 'Incorrect Password'}); // for dev only
         // return callback(null, false, { message: 'Incorrect username or password'}); // for release
       }
 
-      console.debug('Authenticate.js: success');
+      // this is where `passport.serializeUser()`s callback parameter `user` data comes from.
       return callback(null, result[0]);
     });
   });
 }));
 
+// happens during username and password authentication (login).
 passport.serializeUser(function(user, callback) {
   process.nextTick(function() {
-    return callback(null, {
-      id: user.id,
-      username: user.username,
-      picture: user.picture
-    });
+    // stores the new structure of the `user` data to the session table.
+    return callback(null, { id: user.id });
   });
 });
 
+// happens everytime we `checkAuth` for an http route.
+// the `user` parameter is the extracted `user` data in the session table.
 passport.deserializeUser(function(user, callback) {
   process.nextTick(function() {
+    // sets the `req.user` object on https requests after the `checkAuth` middleware.
     return callback(null, user);
   });
 });
