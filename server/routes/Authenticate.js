@@ -15,20 +15,10 @@ authenticate.get('/', (req, res) => {
   res.sendFile('basic-login.html', { root: './public'});
 });
 
-// localhost:PORT/login/success
-authenticate.get('/success', checkAuth, (req, res) => {
-  res.status(200).json({ msg: 'Login Success', code: 200 })
+// localhost:PORT/login
+authenticate.post('/', passport.authenticate('local'), function(req, res) {
+  res.json({ msg: "Login Success", code: 200 });
 });
-
-// localhost:PORT/login/failed
-authenticate.get('/failed', (req, res) => {
-  res.status(401).json({ msg: 'Loging Failed', code: 401 })
-});
-
-authenticate.post('/', passport.authenticate('local', {
-  successRedirect: '/login/success',
-  failureRedirect: '/login/failed'
-}));
 
 // localhost:PORT/login/signout
 authenticate.delete('/signout', checkAuth, (req, res, next) => {
