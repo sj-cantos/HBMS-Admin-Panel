@@ -31,6 +31,7 @@ const Sidebar = () => {
             w={navSize == "small" ? "75px" : "200px"}
             flexDir="column"
             justifyContent="space-between"
+            transition="width 0.3s ease"
         >
             <Flex
                 p="5%"
