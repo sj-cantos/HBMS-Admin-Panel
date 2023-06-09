@@ -24,7 +24,7 @@ const Layout = () => {
   return (
     <div>
         <BrowserRouter>
-          {loggedIn ? (
+        {loggedIn ? (
             <Flex w="100%">
               <Sidebar />
               <Routes>
