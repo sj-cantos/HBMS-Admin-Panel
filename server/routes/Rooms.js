@@ -26,11 +26,10 @@ rooms.get('/get', (req, res) => {
             "status": row.status,
             "price": row.price,
             "bed_type": row.bed_type,
-            "pictures" : ["",""]
+            "pictures" : []
           }))
 
           res.send(response);
-
           
       }
     });
