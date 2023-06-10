@@ -11,33 +11,27 @@ rooms.get('/test', checkAuth, (req, res) => {
 // Define the route handler for GET request
 rooms.get('/get', (req, res) => {
   pool.execute(`
-    SELECT room_types.*, roomimages.room_url
-    FROM room_types
-    LEFT JOIN roomimages ON room_types.id = roomimages.room_type_id`,
+  SELECT * FROM room_types`,
     (err, result) => {
       if (err) {
-        res.status(500).send("Database error");
+        res.status(500).send("Database error" + err.message);
       } else {
-        // Transform the result into an object containing room types and their pictures
-        const roomData = {};
+      
+        
+          
+          const response = result.map((row)=>({
+            "id" : row.id,
+            "room_type" : row.room_type,
+            "amenities" : row.amenities,
+            "status": row.status,
+            "price": row.price,
+            "bed_type": row.bed_type,
+            "pictures" : ["",""]
+          }))
 
-        for (const row of result) {
-          const { id, room_name, room_url } = row;
+          res.send(response);
 
-          if (!roomData[id]) {
-            roomData[id] = {
-              id,
-              room_name,
-              pictures: []
-            };
-          }
-
-          if (room_url) {
-            roomData[id].pictures.push(room_url);
-          }
-        }
-
-        res.status(200).json(Object.values(roomData));
+          
       }
     });
 });
