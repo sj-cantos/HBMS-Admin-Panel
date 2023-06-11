@@ -20,9 +20,8 @@ rooms.get('/', (req, res) => {
         res.status(500).send("Database error" + err.message);
       } else {
       
-        
-          
         const rooms = {};
+        
         result.forEach((row) => {
           const roomId = row.id;
           if (!rooms[roomId]) {
