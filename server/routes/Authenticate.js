@@ -12,7 +12,7 @@ const checkAuth = require('./CheckAuth');
 // localhost:PORT/login
 authenticate.get('/', (req, res) => {
   // send the built react app html file here during production.
-  res.sendFile('basic-login.html', { root: './public'});
+  res.sendFile('index.html', { root: './public'});
 });
 
 // localhost:PORT/login
