@@ -24,16 +24,16 @@ export default function NavItem({ icon, title, description, active, navSize,to }
                 <Link
                     as={ReactRouterLink}
                     to = {to}
-                    backgroundColor={active && "#AEC8CA"}
+                    backgroundColor={active && "blue.100"}
                     p={3}
                     borderRadius={8}
-                    _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
+                    _hover={{ textDecor: 'none', backgroundColor: "blue.200" }}
                     w={navSize == "large" && "100%"}
                 >
                     <MenuButton w="100%">
                         <Flex>
-                            <Icon as={icon} fontSize="xl" color={active ? "#82AAAD" : "gray.500"} />
-                            <Text ml={5} display={navSize == "small" ? "none" : "flex"}>{title}</Text>
+                            <Icon as={icon} fontSize="xl" color={active ? "#82AAAD" : "white"} />
+                            <Text ml={5} display={navSize == "small" ? "none" : "flex"} color="white">{title}</Text>
                         </Flex>
                     </MenuButton>
                 </Link>

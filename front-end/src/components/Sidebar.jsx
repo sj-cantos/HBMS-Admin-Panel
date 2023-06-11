@@ -28,10 +28,11 @@ const Sidebar = ({admin}) => {
             marginTop="2.5vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize == "small" ? "15px" : "30px"}
-            w={navSize == "small" ? "75px" : "200px"}
+            w={navSize == "small" ? "75px" : "230px"}
             flexDir="column"
             justifyContent="space-between"
             transition="width 0.3s ease"
+            bgColor="blue.400"
         >
             <Flex
                 p="5%"
@@ -44,6 +45,7 @@ const Sidebar = ({admin}) => {
                     background="none"
                     mt={5}
                     _hover={{ background: 'none' }}
+                    color="white"
                     icon={<FiMenu />}
                     onClick={() => {
                         if (navSize == "small")
@@ -71,7 +73,7 @@ const Sidebar = ({admin}) => {
                     <Avatar size="sm" src="avatar-1.jpg" />
                     <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">{admin}</Heading>
-                        <Text color="gray">Admin</Text>
+                        <Text color="white">Admin</Text>
                     </Flex>
                 </Flex>
             </Flex>

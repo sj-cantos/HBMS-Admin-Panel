@@ -13,7 +13,7 @@ import LogIn from './pages/LogIn'
 const Layout = () => {
 
   //set the login state temporarily to false in order to view the login page
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [user, setUser] = useState('');
 
   const handleLogin = (loggedInUser) => {
@@ -28,13 +28,14 @@ const Layout = () => {
         {loggedIn ? (
             <Flex w="100%">
               <Sidebar admin={user} />
-              
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/bookings" element={<Bookings />} />
-                <Route path="/rooms" element={<Rooms />} />
-                <Route path="/analytics" element={<Analytics />} />
-              </Routes>
+              <Flex ml="40px" mt="20px">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/bookings" element={<Bookings />} />
+                  <Route path="/rooms" element={<Rooms />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                </Routes>
+              </Flex>
             </Flex>
           ) : (
             <LogIn handleLogin={handleLogin} />
