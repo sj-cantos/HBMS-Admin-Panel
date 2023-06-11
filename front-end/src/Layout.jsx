@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/sidebar'
 import { Flex, Text, IconButton } from '@chakra-ui/react'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
@@ -26,9 +26,9 @@ const Layout = () => {
     <div>
         <BrowserRouter>
         {loggedIn ? (
-            <Flex w="100%">
+            <Flex w="100%" >
               <Sidebar admin={user} />
-              <Flex ml="40px" mt="20px">
+              <Flex ml="40px" mt="20px"flex={1}>
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/bookings" element={<Bookings />} />
