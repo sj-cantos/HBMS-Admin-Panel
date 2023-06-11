@@ -9,7 +9,7 @@ rooms.get('/test', checkAuth, (req, res) => {
 });
 
 // Define the route handler for GET request
-rooms.get('/get', (req, res) => {
+rooms.get('/', (req, res) => {
   pool.execute(`
   SELECT room_types.*, roomimages.room_url
   FROM room_types
