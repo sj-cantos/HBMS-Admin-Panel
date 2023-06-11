@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from './components/sidebar'
+import Sidebar from './components/Sidebar'
 import { Flex, Text, IconButton } from '@chakra-ui/react'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
@@ -10,23 +10,24 @@ import { useState } from 'react'
 import LogIn from './pages/LogIn'
 
 
-
 const Layout = () => {
 
   //set the login state temporarily to false in order to view the login page
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = (loggedInUser) => {
     // Perform login authentication here (e.g., API call)
     // If login is successful, set loggedIn state to true
     setLoggedIn(true);
+    setUser(loggedInUser);
   };
   return (
     <div>
         <BrowserRouter>
         {loggedIn ? (
             <Flex w="100%">
-              <Sidebar />
+              <Sidebar admin={user} />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/bookings" element={<Bookings />} />
