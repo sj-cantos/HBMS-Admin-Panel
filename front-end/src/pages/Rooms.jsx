@@ -38,6 +38,7 @@ const Rooms = () => {
   return (
     <div>
       Rooms
+      {/*Initial table, not yet responsive*/ }
       <TableContainer >
         <Table size="lg">
           <Thead>
