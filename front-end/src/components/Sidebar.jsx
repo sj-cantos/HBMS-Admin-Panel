@@ -18,7 +18,7 @@ import {
 import NavItem from '../components/NavItem'
 
 
-const Sidebar = () => {
+const Sidebar = ({admin}) => {
     const [navSize, changeNavSize] = useState("large")
     return (
         <Flex
@@ -70,7 +70,7 @@ const Sidebar = () => {
                 <Flex mt={4} align="center">
                     <Avatar size="sm" src="avatar-1.jpg" />
                     <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
-                        <Heading as="h3" size="sm">Shannon John</Heading>
+                        <Heading as="h3" size="sm">{admin}</Heading>
                         <Text color="gray">Admin</Text>
                     </Flex>
                 </Flex>
