@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 
 const PORT = process.env.PORT || 3003;
+const cors = require('cors');
 require('./shownet')(PORT);
+
+app.use(cors());
 
 require('dotenv').config();  // load .env variables
 
