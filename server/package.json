@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app",
     "create-admin": "node create-admin",
-    "build": "mkdir public & cd ../front-end && npm run build && cp -r ./dist/* ../server/public || robocopy ./dist/ ../server/public /s"
+    "build": "rmdir public /s /q || rm -r public & mkdir public & cd ../front-end && npm run build && cp -r ./dist/* ../server/public || robocopy ./dist/ ../server/public /s"
   },
   "author": "",
   "license": "ISC",
