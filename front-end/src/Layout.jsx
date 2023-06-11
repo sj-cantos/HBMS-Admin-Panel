@@ -25,14 +25,16 @@ const Layout = () => {
     <div>
         <BrowserRouter>
         {loggedIn ? (
-            <Flex w="100%">
+            <Flex w="100%" >
               <Sidebar />
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/bookings" element={<Bookings />} />
-                <Route path="/rooms" element={<Rooms />} />
-                <Route path="/analytics" element={<Analytics />} />
-              </Routes>
+              <Flex pl="40px" pt="40px">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/bookings" element={<Bookings />} />
+                  <Route path="/rooms" element={<Rooms />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                </Routes>
+              </Flex>
             </Flex>
           ) : (
             <LogIn handleLogin={handleLogin} />
