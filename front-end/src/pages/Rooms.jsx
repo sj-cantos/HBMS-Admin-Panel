@@ -54,7 +54,7 @@ const Rooms = () => {
         <Tr key={item.id}>
           <Td>{String(item.id).padStart(3, '0')}</Td>
           <Td>
-                <Image src={item.images[0]} height={100} width={900} />  
+                <Image src={item.images[0]} height={100} width={900} borderRadius="10px"/>  
             </Td>
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
