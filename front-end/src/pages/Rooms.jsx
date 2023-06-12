@@ -39,10 +39,11 @@ const Rooms = () => {
     <div>
       Rooms
       {/*Initial table, not yet responsive*/ }
-      <TableContainer borderRadius="10px" mt="150px">
+      <TableContainer borderRadius="10px" mt="140px">
         <Table size="lg">
           <Thead>
         <Tr>
+          <Th>ID</Th>
           <Th>Room Name</Th>
           <Th>Bed Type</Th>
           <Th>Status</Th>
@@ -52,18 +53,17 @@ const Rooms = () => {
       </Thead>
       <Tbody>
       {roomsData.map((item) => (
+        
         <Tr key={item.id}>
+          <Td>{String(item.id).padStart(3, '0')}</Td>
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
-          <Td><div style={{ whiteSpace: "normal", maxHeight: showFullAmenities ? "none" : "2.2em", lineHeight: "1.1em" }}>
-    {item.amenities}
-  </div>
-  {!showFullAmenities && (
-    <button onClick={() => setShowFullAmenities(true)}>Show More</button>
-  )}
-    
-  </Td>
+          <Td>
+              <div style={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
+                {item.amenities}
+              </div> 
+          </Td>
           <Td>{item.price}</Td>
           {/* Add more table cells as needed */}
         </Tr>
