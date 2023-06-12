@@ -10,7 +10,7 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Tooltip
+  Image
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useState } from 'react';
@@ -22,13 +22,8 @@ const Rooms = () => {
   useEffect(()=>{
     const getRooms = ()=>{
       axios.get('http://localhost:3003/rooms')
-      .then(response=> {if (Array.isArray(response.data)) {
-        setRoomsData(response.data);
-      } else {
-        console.log("Invalid data format:", response.data);
-      }
-      })
-      .catch(console.log("error"))
+      .then(response=> setRoomsData(response.data))
+      .catch(error => console.log(error))
     }
   getRooms();
 
@@ -44,6 +39,7 @@ const Rooms = () => {
           <Thead>
         <Tr>
           <Th>ID</Th>
+          <Th>Images</Th>
           <Th>Room Name</Th>
           <Th>Bed Type</Th>
           <Th>Status</Th>
@@ -56,6 +52,7 @@ const Rooms = () => {
         
         <Tr key={item.id}>
           <Td>{String(item.id).padStart(3, '0')}</Td>
+          <Td><Image src={item.images[0]} /></Td>
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
