@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from './components/sidebar'
+import Sidebar from './components/Sidebar'
 import { Flex, Text, IconButton } from '@chakra-ui/react'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
@@ -21,14 +21,16 @@ const Layout = () => {
     // If login is successful, set loggedIn state to true
     setLoggedIn(true);
     setUser(loggedInUser);
+    
   };
+  const [navSize, changeNavSize] = useState("large")
   return (
     <div>
         <BrowserRouter>
         {loggedIn ? (
             <Flex w="100%" >
               <Sidebar admin={user} />
-              <Flex ml="40px" mt="20px"flex={1}>
+              <Flex ml={navSize === "small" ? "20px" : "40px"} flex={1}>
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/bookings" element={<Bookings />} />

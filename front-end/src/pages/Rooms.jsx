@@ -39,7 +39,7 @@ const Rooms = () => {
     <div>
       Rooms
       {/*Initial table, not yet responsive*/ }
-      <TableContainer >
+      <TableContainer borderRadius="10px" mt="150px">
         <Table size="lg">
           <Thead>
         <Tr>
@@ -56,9 +56,12 @@ const Rooms = () => {
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
-          <Td><div style={{ whiteSpace: "normal", maxHeight: "2.2em", lineHeight: "1.1em" }}>
+          <Td><div style={{ whiteSpace: "normal", maxHeight: showFullAmenities ? "none" : "2.2em", lineHeight: "1.1em" }}>
     {item.amenities}
   </div>
+  {!showFullAmenities && (
+    <button onClick={() => setShowFullAmenities(true)}>Show More</button>
+  )}
     
   </Td>
           <Td>{item.price}</Td>

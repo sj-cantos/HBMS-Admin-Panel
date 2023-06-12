@@ -23,6 +23,7 @@ const Sidebar = ({admin}) => {
     return (
         <Flex
             pos="sticky"
+            top = "0"
             left="5"
             h="95vh"
             marginTop="2.5vh"
@@ -33,6 +34,7 @@ const Sidebar = ({admin}) => {
             justifyContent="space-between"
             transition="width 0.3s ease"
             bgColor="blue.400"
+            
         >
             <Flex
                 p="5%"
