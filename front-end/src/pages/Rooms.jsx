@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useState } from 'react';
+
 const Rooms = () => {
 
   const [roomsData, setRoomsData] = useState([]);
@@ -28,7 +29,7 @@ const Rooms = () => {
   getRooms();
 
   });
-
+  
 
   return (
     <div>
@@ -52,7 +53,9 @@ const Rooms = () => {
         
         <Tr key={item.id}>
           <Td>{String(item.id).padStart(3, '0')}</Td>
-          <Td><Image src={item.images[0]} /></Td>
+          <Td>
+                <Image src={item.images[0]} height={100} width={900} />  
+            </Td>
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
