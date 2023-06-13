@@ -8,6 +8,12 @@ import {
     ModalBody,
     ModalCloseButton,Button
   } from '@chakra-ui/react'
+  import {
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    FormHelperText,Input,Stack
+  } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
 
 const AddRoomModal = ({handleAdd}) => {
@@ -15,20 +21,31 @@ const AddRoomModal = ({handleAdd}) => {
   return (
     <div>
         <Button onClick={onOpen} variant="solid" >Add</Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size="3xl">
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
+                <ModalHeader>Add Room Type</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody>
-                    Hello
-                </ModalBody>
+                    <ModalBody>
+                        <FormControl>
+                            <Stack spacing={2}>
+                                <FormLabel>Room Name</FormLabel>
+                                <Input placeholder="Room Name"/>
+                                <FormLabel>Bed Type</FormLabel>
+                                <Input placeholder="Bed Type"/>
+                                <FormLabel>Price</FormLabel>
+                                <Input placeholder="Room Name"/>
+                                <FormLabel>Amenities</FormLabel>
+                                <Input placeholder="Amenities" height="100px"/>
+                            </Stack>
+                        </FormControl>
+                    </ModalBody>
 
                 <ModalFooter>
                 <Button colorScheme='blue' mr={3} onClick={onClose}>
-                    Close
+                    Add
                 </Button>
-                <Button variant='ghost'>Secondary Action</Button>
+                <Button variant='ghost'>Cancel</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
