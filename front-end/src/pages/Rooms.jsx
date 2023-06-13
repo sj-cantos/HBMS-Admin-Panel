@@ -60,9 +60,9 @@ const Rooms = () => {
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
           <Td>
-              <div style={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
+              <Text style={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
                 {item.amenities}
-              </div> 
+              </Text> 
           </Td>
           <Td>{item.price}</Td>
           {/* Add more table cells as needed */}
