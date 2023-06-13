@@ -10,7 +10,7 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Image,Button, useDisclosure,Flex
+  Image,Button, useDisclosure,Flex, Input,Stack
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useState } from 'react';
@@ -19,8 +19,7 @@ import AddRoomModal from '../components/AddRoomModal';
 const Rooms = () => {
 
   const [roomsData, setRoomsData] = useState([]);
-  const [showFullAmenities, setShowFullAmenities] = useState(false);
-  
+   
   useEffect(()=>{
     const getRooms = ()=>{
       axios.get('http://localhost:3003/rooms')
@@ -31,11 +30,12 @@ const Rooms = () => {
 
   });
   
-  const {onOpen} = useDisclosure();
+ 
   return (
-    <div>
+    <Stack>
+      
       <Text>Rooms</Text>
-      <Flex justifyContent="flex-end" pt="40px"><AddRoomModal onOpen={onOpen}/></Flex>
+      <Flex justifyContent="flex-end" position="relative" top="125px"><AddRoomModal/><Input placeholder="Search Rooms" width="500px"/></Flex>
       
       <TableContainer borderRadius="10px" mt="140px">
         <Table size="lg">
@@ -75,7 +75,7 @@ const Rooms = () => {
         </Table>
       </TableContainer>
     
-    </div>
+    </Stack>
   )
 }
 
