@@ -10,10 +10,11 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Image
+  Image,Button, useDisclosure,Flex
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { useState } from 'react';
+import AddRoomModal from '../components/AddRoomModal';
 
 const Rooms = () => {
 
@@ -30,11 +31,12 @@ const Rooms = () => {
 
   });
   
-
+  const {onOpen} = useDisclosure();
   return (
     <div>
-      Rooms
-      {/*Initial table, not yet responsive*/ }
+      <Text>Rooms</Text>
+      <Flex justifyContent="flex-end" pt="40px"><AddRoomModal onOpen={onOpen}/></Flex>
+      
       <TableContainer borderRadius="10px" mt="140px">
         <Table size="lg">
           <Thead>
