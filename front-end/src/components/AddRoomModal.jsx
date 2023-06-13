@@ -20,7 +20,7 @@ const AddRoomModal = ({handleAdd}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <div>
-        <Button onClick={onOpen} variant="solid" >Add</Button>
+        <Button onClick={onOpen} variant="solid" colorScheme="teal" w="70px" >Add</Button>
         <Modal isOpen={isOpen} onClose={onClose} size="3xl">
             <ModalOverlay />
             <ModalContent>

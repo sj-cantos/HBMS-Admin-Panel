@@ -33,7 +33,7 @@ const Sidebar = ({admin}) => {
             flexDir="column"
             justifyContent="space-between"
             transition="width 0.3s ease"
-            bgColor="blue.400"
+            bgColor= "tertiary"
             
         >
             <Flex
