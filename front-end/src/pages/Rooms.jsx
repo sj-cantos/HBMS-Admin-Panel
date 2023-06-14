@@ -10,8 +10,9 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Image,Button, useDisclosure,Flex, Input,Stack
+  Image,Button, useDisclosure,Flex, Input,Stack, IconButton
 } from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useState } from 'react';
 import AddRoomModal from '../components/AddRoomModal';
@@ -35,10 +36,22 @@ const Rooms = () => {
     <Stack>
       
       <Text>Rooms</Text>
-      <Flex justifyContent="flex-end" position="relative" top="125px"><AddRoomModal/><Input placeholder="Search Rooms" width="500px"/></Flex>
+      <Flex justifyContent="space-between" position="relative" top="125px"><AddRoomModal/><Flex alignItems="center">
+          <Input placeholder="Search Rooms" width="500px" colorScheme='white' />
+          <IconButton
+            icon={<SearchIcon />}
+            aria-label="Search"
+            ml={2}
+            bg="white"
+            color="tertiary"
+            borderColor="tertiary"
+            variant="outline"
+            
+          />
+        </Flex></Flex>
       
-      <TableContainer borderRadius="10px" mt="140px">
-        <Table size="lg">
+      <TableContainer borderRadius="10px" mt="140px" boxShadow= "lg">
+        <Table size="lg" bg="white">
           <Thead>
         <Tr>
           <Th>ID</Th>
@@ -62,7 +75,7 @@ const Rooms = () => {
           <Td>{item.bed_type}</Td>
           <Td>{item.status}</Td>
           <Td>
-              <Text style={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
+              <Text sx={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
                 {item.amenities}
               </Text> 
           </Td>

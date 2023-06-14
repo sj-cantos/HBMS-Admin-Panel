@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from './components/Sidebar'
-import { Flex, Text, IconButton } from '@chakra-ui/react'
+import { Flex, Text, IconButton, Box } from '@chakra-ui/react'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Rooms from './pages/Rooms'
@@ -25,7 +25,7 @@ const Layout = () => {
   };
   const [navSize, changeNavSize] = useState("large")
   return (
-    <div>
+    <Box bg="white.300">
         <BrowserRouter>
         {loggedIn ? (
             <Flex w="100%" >
@@ -43,7 +43,7 @@ const Layout = () => {
             <LogIn handleLogin={handleLogin} />
           )}
         </BrowserRouter>
-    </div>
+    </Box>
   )
 }
 

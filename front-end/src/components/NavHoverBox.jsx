@@ -21,7 +21,7 @@ export default function NavHoverBox({ title, icon, description }) {
             />
             <Flex
                 h={200}
-                w={200}
+                w={220}
                 
                 flexDir="column"
                 alignItems="center"
