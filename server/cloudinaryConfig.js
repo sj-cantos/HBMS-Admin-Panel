@@ -6,13 +6,6 @@ cloudinary.config({
   api_secret: 'moCmIBKfuKpKQj8fBYhfs-FCZaE'
 });
 
-//test upload image in cloudinary server
-cloudinary.uploader.upload('./testpic.jpg', (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(result);
-    }
-  });
+
 
 module.exports = cloudinary;

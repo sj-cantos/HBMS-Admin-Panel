@@ -1,7 +1,7 @@
 const express = require('express');
 const rooms = express.Router();
 const pool = require('../database');
-
+const cloudinary = require('../cloudinaryConfig')
 const checkAuth = require('./CheckAuth');
 
 rooms.get('/test', checkAuth, (req, res) => {
@@ -42,6 +42,40 @@ rooms.get('/', (req, res) => {
           
       }
     });
+});
+
+rooms.post('/', (req, res) => {
+  const { roomData, images } = req.body;
+
+  pool.execute(
+    `INSERT INTO room_types (room_type, bed_type, price, amenities)
+     VALUES (?, ?, ?, ?)`,
+    [roomData.name, roomData.bedType, roomData.price, roomData.amenities],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting room data:', err);
+        return res.status(500).json({ error: 'Failed to insert room data' });
+      }
+
+      const roomId = result.insertId;
+
+      const imageData = images.map((image) => [roomId, image.url]);
+
+      pool.execute(
+        `INSERT INTO roomimages (room_type, room_url)
+         VALUES ?`,
+        [imageData],
+        (err, result) => {
+          if (err) {
+            console.error('Error inserting room images:', err);
+            return res.status(500).json({ error: 'Failed to insert room images' });
+          }
+
+          return res.status(200).json({ message: 'Room data and images saved successfully' });
+        }
+      );
+    }
+  );
 });
 
 
