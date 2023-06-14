@@ -48,7 +48,7 @@ rooms.post('/', (req, res) => {
   const { roomData, images } = req.body;
 
   pool.execute(
-    `INSERT INTO room_types (room_type, bed_type, price, amenities)
+    `INSERT INTO room_types (name, bed_type, price, amenities)
      VALUES (?, ?, ?, ?)`,
     [roomData.name, roomData.bedType, roomData.price, roomData.amenities],
     (err, result) => {
