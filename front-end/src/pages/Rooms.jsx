@@ -58,7 +58,6 @@ const Rooms = () => {
           <Th>Images</Th>
           <Th>Room Name</Th>
           <Th>Bed Type</Th>
-          <Th>Status</Th>
           <Th>Amenities</Th>
           <Th isNumeric>Price</Th>
         </Tr>
@@ -73,7 +72,7 @@ const Rooms = () => {
             </Td>
           <Td>{item.name}</Td>
           <Td>{item.bed_type}</Td>
-          <Td>{item.status}</Td>
+
           <Td>
               <Text sx={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>
                 {item.amenities}
