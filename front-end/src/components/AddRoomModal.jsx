@@ -15,9 +15,17 @@ import {
     FormHelperText,Input,Stack
   } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
+import { useState } from 'react'
 
 const AddRoomModal = ({handleAdd}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [newRoomData, setNewRoomData] = useState({})
+
+    const handleSave = () => {
+        console.log(newRoomData)
+
+    }
+    
   return (
     <div>
         <Button onClick={onOpen} variant="solid" bg="tertiary" color="white" w="70px" >Add</Button>
@@ -30,22 +38,22 @@ const AddRoomModal = ({handleAdd}) => {
                         <FormControl>
                             <Stack spacing={2}>
                                 <FormLabel>Room Name</FormLabel>
-                                <Input placeholder="Room Name"/>
+                                <Input placeholder="Room Name" onChange={(e) => setNewRoomData({ ...newRoomData, name: e.target.value })}/>
                                 <FormLabel>Bed Type</FormLabel>
-                                <Input placeholder="Bed Type"/>
+                                <Input placeholder="Bed Type" onChange={(e) => setNewRoomData({ ...newRoomData, bedType: e.target.value })}/>
                                 <FormLabel>Price</FormLabel>
-                                <Input placeholder="Room Name"/>
+                                <Input placeholder="Room Name" onChange={(e) => setNewRoomData({ ...newRoomData, price: e.target.value })}/>
                                 <FormLabel>Amenities</FormLabel>
-                                <Input placeholder="Amenities" height="100px"/>
+                                <Input placeholder="Amenities" height="100px" onChange={(e) => setNewRoomData({ ...newRoomData, amenities: e.target.value })}/>
                             </Stack>
                         </FormControl>
                     </ModalBody>
 
                 <ModalFooter>
-                <Button colorScheme='teal' mr={3} onClick={onClose}>
+                <Button colorScheme='teal' mr={3} onClick = {handleSave} >
                     Save
                 </Button>
-                <Button variant='ghost'>Cancel</Button>
+                <Button variant='ghost' onClick={onClose}>Cancel</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
