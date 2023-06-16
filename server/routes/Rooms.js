@@ -63,12 +63,26 @@ rooms.post('/', (req, res) => {
     .then((imageURL) => {
       const roomData = { ...reqData, imageURL };
       console.log(roomData);
-      res.status(200).json({status: 200})
-      responseSent = true;
-      pool.execute('',(err,rows)=>{
-        if(err && !responseSent){
-          res.status(500).json({status: "500", error: err})
+      pool.execute(`INSERT INTO room_types(room_type,bed_type,amenities,price) VALUES(?,?,?,?)`,[roomData.name,roomData.bedType,roomData.amenities,roomData.price],(err,row)=>{
+        if(err){
+          console.log(err)
+          res.status(500).json({ status: "500", error: err });
+          return;
         }else{
+          const roomID = row.insertId;
+          console.log("saved room data success")
+          pool.execute(`INSERT INTO roomimages(room_url,room_type) VALUES(?,?)`,[roomData.imageURL,roomID],(err,row)=>{
+            if(err){
+              console.log(err)
+              res.status(500).json({ status: "500", error: err });
+              return;
+            }
+              
+              else{
+               console.log("saved image successfully", row.affectedRows)
+               res.status(200).json({ status: "200", message: "Data saved successfully" });
+              }
+          })
 
         }
       })
