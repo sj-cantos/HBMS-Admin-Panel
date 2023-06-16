@@ -57,23 +57,29 @@ const handleUpload = async (imageData) => {
   }
 };
 rooms.post('/', (req, res) => {
-  const { reqData, imageData } = req.body;
+  const {  imageData, ...reqData } = req.body;
 
   handleUpload(imageData)
     .then((imageURL) => {
       const roomData = { ...reqData, imageURL };
       console.log(roomData);
+      res.status(200).json({status: 200})
+      responseSent = true;
+      pool.execute('',(err,rows)=>{
+        if(err && !responseSent){
+          res.status(500).json({status: "500", error: err})
+        }else{
 
-      // Continue with your logic, e.g., inserting the data into the database
+        }
+      })
+
+      
     })
     .catch((error) => {
       console.log(error);
     })
 
-  //pool.execute('',(err,results)=>{
-    //insert the data into database
-  //})
-  
+ 
 });
 
 
