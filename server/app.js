@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 3003;
 const cors = require('cors');
@@ -57,8 +58,10 @@ app.use(express.static('public'));
 
 // ------------------------- json body parsers section ------------------------- 
 
-app.use(express.json()); // accept 'application/json' (json objects)
-app.use(express.urlencoded( { extended: true })); // accept 'x-www-form-urlencoded' (form data)
+//app.use(express.json()); // accept 'application/json' (json objects)
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
+//app.use(express.urlencoded( { extended: true })); // accept 'x-www-form-urlencoded' (form data)
 
 // ------------------------- routes section -------------------------
 

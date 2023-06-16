@@ -44,38 +44,36 @@ rooms.get('/', (req, res) => {
     });
 });
 
+const handleUpload = async (imageData) => {
+  try {
+    const image = await cloudinary.uploader.upload(imageData, {
+      folder: "roomUploads"
+    });
+
+    return image.secure_url;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 rooms.post('/', (req, res) => {
-  const { roomData, images } = req.body;
+  const { reqData, imageData } = req.body;
 
-  pool.execute(
-    `INSERT INTO room_types (name, bed_type, price, amenities)
-     VALUES (?, ?, ?, ?)`,
-    [roomData.name, roomData.bedType, roomData.price, roomData.amenities],
-    (err, result) => {
-      if (err) {
-        console.error('Error inserting room data:', err);
-        return res.status(500).json({ error: 'Failed to insert room data' });
-      }
+  handleUpload(imageData)
+    .then((imageURL) => {
+      const roomData = { ...reqData, imageURL };
+      console.log(roomData);
 
-      const roomId = result.insertId;
+      // Continue with your logic, e.g., inserting the data into the database
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
-      const imageData = images.map((image) => [roomId, image.url]);
-
-      pool.execute(
-        `INSERT INTO roomimages (room_type, room_url)
-         VALUES ?`,
-        [imageData],
-        (err, result) => {
-          if (err) {
-            console.error('Error inserting room images:', err);
-            return res.status(500).json({ error: 'Failed to insert room images' });
-          }
-
-          return res.status(200).json({ message: 'Room data and images saved successfully' });
-        }
-      );
-    }
-  );
+  //pool.execute('',(err,results)=>{
+    //insert the data into database
+  //})
+  
 });
 
 
