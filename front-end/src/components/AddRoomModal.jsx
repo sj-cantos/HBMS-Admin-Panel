@@ -36,7 +36,7 @@ const handleSave = async (e) => {
   const reqData = {...newRoomData, imageData: image}
   try {
     const data = await axios.post('http://localhost:3003/rooms/',reqData)
-    console.log(data)
+    console.log(data) 
     toast({
       title: "Success",
       description: "Data saved successfully.",
