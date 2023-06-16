@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormControl, FormLabel, Input, Stack, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const AddRoomModal = () => {
@@ -7,7 +7,7 @@ const AddRoomModal = () => {
   const [newRoomData, setNewRoomData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState('');
-
+  const toast = useToast();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -32,10 +32,21 @@ const AddRoomModal = () => {
 }
 const handleSave = async (e) => {
   e.preventDefault();
+  
   const reqData = {...newRoomData, imageData: image}
   try {
     const data = await axios.post('http://localhost:3003/rooms/',reqData)
     console.log(data)
+    toast({
+      title: "Success",
+      description: "Data saved successfully.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: 'top'
+    });
+    handleClose();
+
   } catch(error){
     console.log(error);
   }
