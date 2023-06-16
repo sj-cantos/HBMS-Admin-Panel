@@ -32,7 +32,7 @@ const AddRoomModal = () => {
 }
 const handleSave = async (e) => {
   e.preventDefault();
-  const reqData = {...newRoomData, imageURL: image}
+  const reqData = {...newRoomData, imageData: image}
   try {
     const data = await axios.post('localhost:3003/rooms',reqData)
     console.log(data)
