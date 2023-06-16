@@ -34,7 +34,7 @@ const handleSave = async (e) => {
   e.preventDefault();
   const reqData = {...newRoomData, imageData: image}
   try {
-    const data = await axios.post('localhost:3003/rooms',reqData)
+    const data = await axios.post('http://localhost:3003/rooms/',reqData)
     console.log(data)
   } catch(error){
     console.log(error);
