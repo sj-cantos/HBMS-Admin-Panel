@@ -10,9 +10,19 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Image,Button, useDisclosure,Flex, Input,Stack, IconButton
+  Image,Button, useDisclosure,Flex, Input,Stack, IconButton, 
 } from '@chakra-ui/react'
-import { SearchIcon } from '@chakra-ui/icons';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
+import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useState } from 'react';
 import AddRoomModal from '../components/AddRoomModal';
@@ -60,6 +70,7 @@ const Rooms = () => {
           <Th>Bed Type</Th>
           <Th>Amenities</Th>
           <Th isNumeric>Price</Th>
+          <Th></Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -79,7 +90,17 @@ const Rooms = () => {
               </Text> 
           </Td>
           <Td>{item.price}</Td>
-          {/* Add more table cells as needed */}
+          <Td>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+              Actions
+            </MenuButton>
+              <MenuList>
+                <MenuItem icon={<EditIcon/>}>Edit</MenuItem>
+                <MenuItem icon={<DeleteIcon/>}>Delete</MenuItem>
+              </MenuList>
+          </Menu>
+          </Td>
         </Tr>
       ))}
     </Tbody>
