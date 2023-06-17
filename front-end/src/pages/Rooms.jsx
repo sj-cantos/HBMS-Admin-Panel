@@ -26,10 +26,16 @@ import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/ico
 import axios from 'axios';
 import { useState } from 'react';
 import AddRoomModal from '../components/AddRoomModal';
+import EditRoomModal from '../components/EditRoomModal';
 
 const Rooms = () => {
 
   const [roomsData, setRoomsData] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [editRoomId, setEditRoomId] = useState(null);
+  const [editRoomData, setEditRoomData] = useState({});
+
+
    
   useEffect(()=>{
     const getRooms = ()=>{
@@ -47,14 +53,25 @@ const Rooms = () => {
   },[]);
 
   const handleEdit = (id) => {
-    
-    console.log("Clicked edit " + id)
-  }
-  const handleDelete = (id) => {
-    
-    console.log("Clicked delete" + id)
-  }
+    const roomToEdit = roomsData.find((room) => room.id === id);
+    setEditRoomId(id);
+    setEditRoomData(roomToEdit);
+    onOpen();
+  };
   
+  const handleEditSubmit = (updatedRoomData) => {
+    // Make the API call to update the room data with the updatedRoomData object
+    // You can use axios.put() or any other method to update the data
+  
+    // After the API call is successful, update the roomsData state with the updated room data
+    const updatedRoomsData = roomsData.map((room) =>
+      room.id === updatedRoomData.id ? updatedRoomData : room
+    );
+    setRoomsData(updatedRoomsData);
+  
+    // Close the edit modal
+    onClose();
+  };
 
   
  
@@ -123,6 +140,14 @@ const Rooms = () => {
 
         </Table>
       </TableContainer>
+      {editRoomId && (
+  <EditRoomModal
+    isOpen={isOpen}
+    onClose={onClose}
+    roomData={editRoomData}
+    onSubmit={handleEditSubmit}
+  />
+)}
     
     </Stack>
   )
