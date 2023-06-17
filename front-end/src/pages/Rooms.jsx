@@ -37,9 +37,25 @@ const Rooms = () => {
       .then(response=> setRoomsData(response.data))
       .catch(error => console.log(error))
     }
-  getRooms();
+    getRooms();
+    return () => {
+      // Cleanup function to cancel any ongoing asynchronous tasks (e.g., axios requests)
+      // This will be executed when the component is unmounted or the dependencies change.
+    };
+  
 
-  });
+  },[]);
+
+  const handleEdit = (id) => {
+    
+    console.log("Clicked edit " + id)
+  }
+  const handleDelete = (id) => {
+    
+    console.log("Clicked delete" + id)
+  }
+  
+
   
  
   return (
@@ -96,8 +112,8 @@ const Rooms = () => {
               Actions
             </MenuButton>
               <MenuList>
-                <MenuItem icon={<EditIcon/>}>Edit</MenuItem>
-                <MenuItem icon={<DeleteIcon/>}>Delete</MenuItem>
+                <MenuItem icon={<EditIcon/>} onClick={() => handleEdit(item.id)}>Edit</MenuItem>
+                <MenuItem icon={<DeleteIcon/>}onClick={()=>handleDelete(item.id)}>Delete</MenuItem>
               </MenuList>
           </Menu>
           </Td>
