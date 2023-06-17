@@ -97,4 +97,25 @@ rooms.post('/', (req, res) => {
 });
 
 
+rooms.put('/', (req, res) => {
+  const { updatedRoomData } = req.body;
+      // Update the room data in the database
+      console.log(updatedRoomData.name)
+      pool.execute(
+        `UPDATE room_types SET room_type=?, bed_type=?, amenities=?, price=? WHERE id=?`,
+        [updatedRoomData.name, updatedRoomData.bed_type, updatedRoomData.amenities, updatedRoomData.price, updatedRoomData.id],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(500).json({ status: "500", error: err });
+            return;
+          } else {
+            console.log("Updated room data successfully");
+
+            
+            
+            } 
+})})
+       
+
 module.exports = rooms;
