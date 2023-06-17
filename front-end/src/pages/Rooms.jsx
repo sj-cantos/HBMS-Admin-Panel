@@ -59,18 +59,26 @@ const Rooms = () => {
     onOpen();
   };
   
-  const handleEditSubmit = (updatedRoomData) => {
+  const handleEditSubmit = async (updatedRoomData,updatedRoomImages) => {
     // Make the API call to update the room data with the updatedRoomData object
     // You can use axios.put() or any other method to update the data
-  
+    try{
+
+        const response = await axios.put('http://localhost:3003/rooms/',{updatedRoomData})
+        
+        console.log(response.data) 
+        const updatedRoomsData = roomsData.map((room) =>
+          room.id === updatedRoomData.id ? updatedRoomData : room
+        );
+        setRoomsData(updatedRoomsData);
+        
+        // Close the edit modal
+        onClose();
+    }catch(error){
+      console.log(error)
+    }
     // After the API call is successful, update the roomsData state with the updated room data
-    const updatedRoomsData = roomsData.map((room) =>
-      room.id === updatedRoomData.id ? updatedRoomData : room
-    );
-    setRoomsData(updatedRoomsData);
-  
-    // Close the edit modal
-    onClose();
+    
   };
 
   
