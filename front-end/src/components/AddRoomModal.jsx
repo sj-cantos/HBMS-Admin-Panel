@@ -39,9 +39,9 @@ const handleSave = async (e) => {
     console.log(data) 
     toast({
       title: "Success",
-      description: "Data saved successfully.",
+      description: "Room details added successfully.",
       status: "success",
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
       position: 'top'
     });
@@ -49,6 +49,14 @@ const handleSave = async (e) => {
 
   } catch(error){
     console.log(error);
+    toast({
+      title: 'Error',
+      description: 'An error occurred while submitting the room data.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+      position: 'top',
+    });
   }
 }
 

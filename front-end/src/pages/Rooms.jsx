@@ -10,7 +10,7 @@ import {
   TableCaption,
   TableContainer,
   Text,
-  Image,Button, useDisclosure,Flex, Input,Stack, IconButton, 
+  Image,Button, useDisclosure,Flex, Input,Stack, IconButton, useToast
 } from '@chakra-ui/react'
 import {
   Menu,
@@ -20,7 +20,7 @@ import {
   MenuItemOption,
   MenuGroup,
   MenuOptionGroup,
-  MenuDivider,
+  MenuDivider
 } from '@chakra-ui/react'
 import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
@@ -37,6 +37,7 @@ const Rooms = () => {
   const [editRoomData, setEditRoomData] = useState({});
   const [deleteRoomId, setDeleteRoomId] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const toast = useToast();
 
   const handleDelete = (id) => {
     setDeleteRoomId(id);
@@ -59,8 +60,7 @@ const Rooms = () => {
     }
     getRooms();
     return () => {
-      // Cleanup function to cancel any ongoing asynchronous tasks (e.g., axios requests)
-      // This will be executed when the component is unmounted or the dependencies change.
+      
     };
   
 
@@ -73,18 +73,23 @@ const Rooms = () => {
     onOpen();
   };
   
-  const handleEditSubmit = async (updatedRoomData,updatedRoomImages) => {
+  const handleEditSubmit = async (updatedRoomData) => {
     
     try{
 
         const response = await axios.put('http://localhost:3003/rooms/',{updatedRoomData})
-        
+        if(response){
+          console.log("returned data")
+        }else{
+          console.log("here")
+        }
         console.log(response.data) 
         const updatedRoomsData = roomsData.map((room) =>
           room.id === updatedRoomData.id ? updatedRoomData : room
         );
-        setRoomsData(updatedRoomsData);
         
+        setRoomsData(updatedRoomsData);
+      
         // Close the edit modal
         onClose();
     }catch(error){

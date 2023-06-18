@@ -10,14 +10,13 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,Stack
+  Button,Stack,useToast
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
     const [updatedRoomData, setUpdatedRoomData] = useState(roomData);
-    const [updatedRoomImages, setUpdatedRoomImages] = useState([roomData.images]);
-
+    const toast = useToast();
     useEffect(() => {
         setUpdatedRoomData(roomData);
       }, [roomData]);
@@ -26,36 +25,21 @@ const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
       const { name, value } = e.target;
       setUpdatedRoomData((prevData) => ({ ...prevData, [name]: value }));
     };
-    const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        const filePromises = files.map((file) => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-              resolve(reader.result);
-            };
-            reader.onerror = (error) => {
-              reject(error);
-            };
-          });
-        });
-    
-        Promise.all(filePromises)
-          .then((results) => {
-            setUpdatedRoomImages(results);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-    
     
      
-  
+      
       const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(updatedRoomData).then(data => console.log(data)).catch((error)=>console.log(error));
+        onSubmit(updatedRoomData).then(data => {console.log(data);
+          toast({
+            title: "Success",
+            description: "Room details edited successfully.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: 'top'
+          }); onClose();
+        }).catch((error)=>console.log(error));
         console.log(updatedRoomData)
       };
   
