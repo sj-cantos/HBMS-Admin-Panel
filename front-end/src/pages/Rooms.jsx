@@ -27,6 +27,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import AddRoomModal from '../components/AddRoomModal';
 import EditRoomModal from '../components/EditRoomModal';
+import DeleteDialog from '../components/DeleteDialog';
 
 const Rooms = () => {
 
@@ -34,6 +35,18 @@ const Rooms = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [editRoomId, setEditRoomId] = useState(null);
   const [editRoomData, setEditRoomData] = useState({});
+  const [deleteRoomId, setDeleteRoomId] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleDelete = (id) => {
+    setDeleteRoomId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = (id) => {
+    const updatedRoomsData = roomsData.filter((room) => room.id !== id);
+    setRoomsData(updatedRoomsData);
+  };
 
 
    
@@ -60,8 +73,7 @@ const Rooms = () => {
   };
   
   const handleEditSubmit = async (updatedRoomData,updatedRoomImages) => {
-    // Make the API call to update the room data with the updatedRoomData object
-    // You can use axios.put() or any other method to update the data
+    
     try{
 
         const response = await axios.put('http://localhost:3003/rooms/',{updatedRoomData})
@@ -148,14 +160,20 @@ const Rooms = () => {
 
         </Table>
       </TableContainer>
-      {editRoomId && (
-  <EditRoomModal
-    isOpen={isOpen}
-    onClose={onClose}
-    roomData={editRoomData}
-    onSubmit={handleEditSubmit}
-  />
-)}
+          {editRoomId && (
+      <EditRoomModal
+        isOpen={isOpen}
+        onClose={onClose}
+        roomData={editRoomData}
+        onSubmit={handleEditSubmit}
+      />
+    )}
+    <DeleteDialog
+      isOpen={isDeleteDialogOpen}
+      onClose={() => setIsDeleteDialogOpen(false)}
+      roomId={deleteRoomId}
+      onDelete={confirmDelete}
+    />
     
     </Stack>
   )
