@@ -46,6 +46,7 @@ const Rooms = () => {
   const confirmDelete = (id) => {
     const updatedRoomsData = roomsData.filter((room) => room.id !== id);
     setRoomsData(updatedRoomsData);
+    setIsDeleteDialogOpen(false);
   };
 
 

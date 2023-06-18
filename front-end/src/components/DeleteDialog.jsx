@@ -12,6 +12,17 @@ import {
 
 const DeleteDialog = ({ isOpen, onClose, roomId, onDelete }) => {
     const cancelRef = React.useRef();
+
+    const confirmDelete = async () => {
+        try {
+          await axios.delete(`http://localhost:3003/rooms/${roomId}`);
+          onDelete(roomId);
+          onClose();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
   return (
     <div>
     
@@ -34,7 +45,7 @@ const DeleteDialog = ({ isOpen, onClose, roomId, onDelete }) => {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={onClose} ml={3}>
+              <Button colorScheme='red' onClick={confirmDelete} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
