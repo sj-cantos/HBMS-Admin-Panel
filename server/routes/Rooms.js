@@ -111,6 +111,7 @@ rooms.put('/', (req, res) => {
             return;
           } else {
             console.log("Updated room data successfully");
+            res.status(200).json({status:200, message:"Room edit success"})
 
             
             
