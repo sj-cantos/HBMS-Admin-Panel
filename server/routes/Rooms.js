@@ -117,5 +117,33 @@ rooms.put('/', (req, res) => {
             } 
 })})
        
+rooms.delete('/:id',(req,res)=>{
+  const deleteId = req.params.id;
+
+  pool.execute('DELETE FROM roomimages WHERE room_type=?',[deleteId],(err,result)=>{
+    if(err){
+      console.log(err)
+      res.status(500).json({status:500,message:err})
+      return;
+    } else {
+      console.log("Affected rows", result.affectedRows)
+      pool.execute('DELETE FROM room_types WHERE id=?',[deleteId],(err,result)=>{
+        if(err){
+          console.log(err)
+          res.status(500).json({status:500,message:err})
+          return;
+        } else {
+          console.log("Affected rows", result.affectedRows)
+          res.status(200).json({status:200, message:"Room succesfully deleted"})
+      }
+      })
+   
+  }
+  })
+
+  
+
+  
+})
 
 module.exports = rooms;
