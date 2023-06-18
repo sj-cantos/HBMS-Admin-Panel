@@ -13,6 +13,7 @@ import {Link as ReactRouterLink} from 'react-router-dom'
 
 
 export default function NavItem({ icon, title, description, active, navSize,to }) {
+   
     return (
         <Flex
             mt={30}
@@ -24,16 +25,22 @@ export default function NavItem({ icon, title, description, active, navSize,to }
                 <Link
                     as={ReactRouterLink}
                     to = {to}
-                    backgroundColor={active && "blue.100"}
+                    
                     p={3}
                     borderRadius={8}
-                    _hover={{ textDecor: 'none', backgroundColor: "teal" }}
+                    _hover={{
+                        textDecoration: 'none',
+                        backgroundColor: active ? 'teal.500' : 'alternative',
+                        
+                      }}
                     w={navSize == "large" && "100%"}
+                    
+                    
                 >
                     <MenuButton w="100%">
                         <Flex>
-                            <Icon as={icon} fontSize="xl" color={active ? "#82AAAD" : "white"} />
-                            <Text fontWeight="medium" ml={5} display={navSize == "small" ? "none" : "flex"} color="white">{title}</Text>
+                            <Icon as={icon} fontSize="xl" color="white"  />
+                            <Text fontWeight="medium" color="white"  ml={5} display={navSize == "small" ? "none" : "flex"  }  >{title}</Text>
                         </Flex>
                     </MenuButton>
                 </Link>
