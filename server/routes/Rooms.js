@@ -31,7 +31,7 @@ rooms.get('/', (req, res) => {
               amenities: row.amenities,
               status: row.status,
               price: row.price,
-              bed_type: row.bed_type,
+              description: row.description,
               images: []
             };
           }
@@ -63,7 +63,7 @@ rooms.post('/', (req, res) => {
     .then((imageURL) => {
       const roomData = { ...reqData, imageURL };
       console.log(roomData);
-      pool.execute(`INSERT INTO room_types(room_type,bed_type,amenities,price) VALUES(?,?,?,?)`,[roomData.name,roomData.bedType,roomData.amenities,roomData.price],(err,row)=>{
+      pool.execute(`INSERT INTO room_types(room_type,description,amenities,price) VALUES(?,?,?,?)`,[roomData.name,roomData.description,roomData.amenities,roomData.price],(err,row)=>{
         if(err){
           console.log(err)
           res.status(500).json({ status: "500", error: err });
@@ -102,8 +102,8 @@ rooms.put('/', (req, res) => {
       // Update the room data in the database
       console.log(updatedRoomData.name)
       pool.execute(
-        `UPDATE room_types SET room_type=?, bed_type=?, amenities=?, price=? WHERE id=?`,
-        [updatedRoomData.name, updatedRoomData.bed_type, updatedRoomData.amenities, updatedRoomData.price, updatedRoomData.id],
+        `UPDATE room_types SET room_type=?, description=?, amenities=?, price=? WHERE id=?`,
+        [updatedRoomData.name, updatedRoomData.description, updatedRoomData.amenities, updatedRoomData.price, updatedRoomData.id],
         (err, result) => {
           if (err) {
             console.log(err);
