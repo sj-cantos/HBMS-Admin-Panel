@@ -5,7 +5,6 @@ import axios from 'axios';
 const AddRoomModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [newRoomData, setNewRoomData] = useState({});
-  const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState('');
   const toast = useToast();
   const handleOpen = () => {
@@ -77,28 +76,28 @@ const handleSave = async (e) => {
                 <Input
                   placeholder="Room Name"
                   onChange={(e) => setNewRoomData({ ...newRoomData, name: e.target.value })}
-                  type="text"
+                  type="text" isRequired
                 />
                 <FormLabel>Description</FormLabel>
                 <Textarea
                   placeholder="Description"
                   onChange={(e) => setNewRoomData({ ...newRoomData, description: e.target.value })}
-                  type="text"
+                  type="text" isRequired
                 />
                 <FormLabel>Price</FormLabel>
                 <Input
                   placeholder="Price"
                   onChange={(e) => setNewRoomData({ ...newRoomData, price: e.target.value })}
-                  type="number"
+                  type="number" isRequired
                 />
                 <FormLabel>Amenities</FormLabel>
                 <Textarea
                   placeholder="Amenities"
                   onChange={(e) => setNewRoomData({ ...newRoomData, amenities: e.target.value })}
-                  type="text"
+                  type="text" isRequired
                 />
                 <FormLabel>Image</FormLabel>
-                <Input type="file" accept="image/*" onChange={handleImageUpload} />
+                <Input type="file" accept="image/*" onChange={handleImageUpload} isRequired />
                 
               </Stack>
             </FormControl>

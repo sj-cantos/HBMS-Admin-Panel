@@ -26,6 +26,7 @@ import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/ico
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import AddBookingModal from '../components/AddBookingModal';
 
 const Bookings = () => {
   const [bookingData,setBookingData] = useState([]);
@@ -67,10 +68,10 @@ const Bookings = () => {
 
   
   return (
-    <Stack>
+    <Stack minWidth="100%">
       
       <Text>Bookings</Text>
-      <Flex justifyContent="space-between" position="relative" top="125px"><Flex alignItems="center">
+      <Flex justifyContent="space-between" position="relative" top="125px"><AddBookingModal/><Flex alignItems="center">
           <Input placeholder="Search Rooms" width="500px" colorScheme='white' />
           <IconButton
             icon={<SearchIcon />}
@@ -92,6 +93,7 @@ const Bookings = () => {
           <Th>Guest Name</Th>
           <Th>Email</Th>
           <Th>Room Type</Th>
+          <Th>Book Date</Th>
           <Th>Check-in</Th>
           <Th>Check-out</Th>
           <Th isNumeric>Guests</Th>
@@ -107,7 +109,7 @@ const Bookings = () => {
                 <Td>{booking.guest_name}</Td>
                 <Td>{booking.email}</Td>
                 <Td>{booking.room_type}</Td>
-                
+                <Td>{getDate(booking.booking_date)}</Td>
                 <Td>{getDate(booking.check_in_date)}</Td>
                 <Td>{getDate(booking.check_out_date)}</Td>
                 <Td  isNumeric width="10px">{booking.num_guests}</Td>
