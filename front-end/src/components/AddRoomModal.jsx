@@ -71,27 +71,31 @@ const handleSave = async (e) => {
           <ModalHeader>Add Room Type</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl>
+            <FormControl  >
               <Stack spacing={2}>
                 <FormLabel>Room Name</FormLabel>
                 <Input
                   placeholder="Room Name"
                   onChange={(e) => setNewRoomData({ ...newRoomData, name: e.target.value })}
+                  type="text"
                 />
                 <FormLabel>Bed Type</FormLabel>
                 <Input
                   placeholder="Bed Type"
                   onChange={(e) => setNewRoomData({ ...newRoomData, bedType: e.target.value })}
+                  type="text"
                 />
                 <FormLabel>Price</FormLabel>
                 <Input
                   placeholder="Price"
                   onChange={(e) => setNewRoomData({ ...newRoomData, price: e.target.value })}
+                  type="number"
                 />
                 <FormLabel>Amenities</FormLabel>
                 <Input
                   placeholder="Amenities"
                   onChange={(e) => setNewRoomData({ ...newRoomData, amenities: e.target.value })}
+                  type="text"
                 />
                 <FormLabel>Image</FormLabel>
                 <Input type="file" accept="image/*" onChange={handleImageUpload} />
