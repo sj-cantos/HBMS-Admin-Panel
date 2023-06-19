@@ -9,7 +9,10 @@ booking.get('/test', checkAuth, (req, res) => {
 });
 
 booking.get('/', (req,res)=>{
-  pool.query('SELECT * FROM hotel_bookings',(err, result)=>{
+  pool.query(`SELECT hotel_bookings.*, status.status_name,room_types.room_type
+              FROM hotel_bookings
+              JOIN status ON status.id = hotel_bookings.status_id
+              JOIN room_types ON room_types.id = hotel_bookings.room_type`,(err, result)=>{
     if(err){
       res.status(500).json({ msg: 'Database Error', code: 500 })
     } else {
