@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormControl, FormLabel, Input, Stack, useToast } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,Textarea, Button, FormControl, FormLabel, Input, Stack, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const AddRoomModal = () => {
@@ -79,10 +79,10 @@ const handleSave = async (e) => {
                   onChange={(e) => setNewRoomData({ ...newRoomData, name: e.target.value })}
                   type="text"
                 />
-                <FormLabel>Bed Type</FormLabel>
-                <Input
-                  placeholder="Bed Type"
-                  onChange={(e) => setNewRoomData({ ...newRoomData, bedType: e.target.value })}
+                <FormLabel>Description</FormLabel>
+                <Textarea
+                  placeholder="Description"
+                  onChange={(e) => setNewRoomData({ ...newRoomData, description: e.target.value })}
                   type="text"
                 />
                 <FormLabel>Price</FormLabel>
@@ -92,7 +92,7 @@ const handleSave = async (e) => {
                   type="number"
                 />
                 <FormLabel>Amenities</FormLabel>
-                <Input
+                <Textarea
                   placeholder="Amenities"
                   onChange={(e) => setNewRoomData({ ...newRoomData, amenities: e.target.value })}
                   type="text"

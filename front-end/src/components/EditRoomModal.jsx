@@ -10,7 +10,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,Stack,useToast
+  Button,Stack,useToast,Textarea
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
@@ -44,7 +44,7 @@ const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
       };
   
     return (
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edit Room</ModalHeader>
@@ -58,10 +58,10 @@ const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
                 value={updatedRoomData.name}
                 onChange={handleInputChange}
               />
-              <FormLabel>Bed Type</FormLabel>
-              <Input
-                name="bed_type"
-                value={updatedRoomData.bed_type}
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                name="description"
+                value={updatedRoomData.description}
                 onChange={handleInputChange}
               />
               <FormLabel>Price</FormLabel>
@@ -71,7 +71,7 @@ const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
                 onChange={handleInputChange}
               />
               <FormLabel>Amenities</FormLabel>
-              <Input
+              <Textarea
                 name="amenities"
                 value={updatedRoomData.amenities}
                 onChange={handleInputChange}

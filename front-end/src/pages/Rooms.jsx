@@ -126,7 +126,7 @@ const Rooms = () => {
           <Th>ID</Th>
           <Th>Images</Th>
           <Th>Room Name</Th>
-          <Th>Bed Type</Th>
+          <Th>Description</Th>
           <Th>Amenities</Th>
           <Th isNumeric>Price</Th>
           <Th></Th>
@@ -141,7 +141,7 @@ const Rooms = () => {
                 <Image src={item.images[0]} height={100} width={900} borderRadius="10px"/>  
             </Td>
           <Td>{item.name}</Td>
-          <Td>{item.bed_type}</Td>
+          <Td sx={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>{item.description}</Td>
 
           <Td>
               <Text sx={{ whiteSpace: "normal", maxHeight:  "none" , lineHeight: "1.1em" }}>

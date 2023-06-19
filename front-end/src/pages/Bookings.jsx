@@ -30,7 +30,7 @@ import { useEffect } from 'react';
 const Bookings = () => {
   const [bookingData,setBookingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
+  const itemsPerPage = 8;
   const totalPages = Math.ceil(bookingData.length / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   
@@ -123,17 +123,19 @@ const Bookings = () => {
       
 
       </TableContainer>
+
+      
       <ButtonGroup>
-  {pageNumbers.map((pageNumber) => (
-    <Button
-      key={pageNumber}
-      colorScheme={pageNumber === currentPage ? "blue" : "gray"}
-      onClick={() => setCurrentPage(pageNumber)}
-    >
-      {pageNumber}
-    </Button>
-  ))}
-</ButtonGroup>
+        {pageNumbers.map((pageNumber) => (
+          <Button
+            key={pageNumber}
+            colorScheme={pageNumber === currentPage ? "teal" : "gray"}
+            onClick={() => setCurrentPage(pageNumber)}
+          >
+            {pageNumber}
+          </Button>
+        ))}
+      </ButtonGroup>
     
     </Stack>
   )
