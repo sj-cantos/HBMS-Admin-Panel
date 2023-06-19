@@ -129,7 +129,7 @@ const Rooms = () => {
           <Th>Description</Th>
           <Th>Amenities</Th>
           <Th isNumeric>Price</Th>
-          <Th></Th>
+          <Th>Actions</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -152,7 +152,7 @@ const Rooms = () => {
           <Td>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              Actions
+              
             </MenuButton>
               <MenuList>
                 <MenuItem icon={<EditIcon/>} onClick={() => handleEdit(item.id)}>Edit</MenuItem>

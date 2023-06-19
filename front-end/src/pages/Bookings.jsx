@@ -94,10 +94,9 @@ const Bookings = () => {
           <Th>Room Type</Th>
           <Th>Check-in</Th>
           <Th>Check-out</Th>
-          <Th isNumeric>No. of guests</Th>
+          <Th isNumeric>Guests</Th>
           <Th>Status</Th>
-          <Th>Book Date</Th>
-          <Th></Th>
+          <Th>Actions</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -106,14 +105,24 @@ const Bookings = () => {
               <Tr key={booking.id}>
                 <Td>{String(booking.id).padStart(3,'0')}</Td>
                 <Td>{booking.guest_name}</Td>
-                <Td></Td>
-                <Td></Td>
+                <Td>{booking.email}</Td>
+                <Td>{booking.room_type}</Td>
                 
                 <Td>{getDate(booking.check_in_date)}</Td>
                 <Td>{getDate(booking.check_out_date)}</Td>
-                <Td isNumeric></Td>
-                <Td></Td>
-                <Td></Td>
+                <Td  isNumeric width="10px">{booking.num_guests}</Td>
+                <Td>{booking.status_id}</Td>
+                <Td>
+                <Menu>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                    
+                  </MenuButton>
+                    <MenuList>
+                      <MenuItem icon={<EditIcon/>} onClick={() => handleEdit(item.id)}>Edit</MenuItem>
+                      <MenuItem icon={<DeleteIcon/>}onClick={()=>handleDelete(item.id)}>Delete</MenuItem>
+                    </MenuList>
+                </Menu>
+                </Td>
               </Tr>
             ))}
           
