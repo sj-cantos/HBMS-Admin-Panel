@@ -111,11 +111,10 @@ const Bookings = () => {
                 <Td>{getDate(booking.check_in_date)}</Td>
                 <Td>{getDate(booking.check_out_date)}</Td>
                 <Td  isNumeric width="10px">{booking.num_guests}</Td>
-                <Td>{booking.status_id}</Td>
+                <Td>{booking.status_name}</Td>
                 <Td>
                 <Menu>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                    
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>     
                   </MenuButton>
                     <MenuList>
                       <MenuItem icon={<EditIcon/>} onClick={() => handleEdit(item.id)}>Edit</MenuItem>
