@@ -20,22 +20,48 @@ import {
   MenuItemOption,
   MenuGroup,
   MenuOptionGroup,
-  MenuDivider
+  MenuDivider,ButtonGroup
 } from '@chakra-ui/react'
 import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Bookings = () => {
+  const [bookingData,setBookingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-const [itemsPerPage] = useState(2);
-const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-const totalPages = Math.ceil(bookings.length / itemsPerPage);
+  const itemsPerPage = 7;
+  const totalPages = Math.ceil(bookingData.length / itemsPerPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  
+  
+  const getPaginatedBookings = (bookings) => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return bookings.slice(startIndex, endIndex);
+  };
 
-const getPaginatedBookings = (bookings) => {
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return bookings.slice(startIndex, endIndex);
-};
+  const getDate = (datetime)=> {
+    const date = new Date(datetime);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formatDate = date.toLocaleDateString(undefined,options);
+    
+    return formatDate;
+  }
+
+  useEffect(()=>{
+    const getBookings = ()=>{
+      axios.get('http://localhost:3003/booking')
+      .then(response=> {console.log(response.data); setBookingData(response.data)})
+      .catch(error => console.log(error))
+    }
+    getBookings();
+    return () => {
+      
+    };
+  
+
+  },[]);
 
 
 
@@ -59,7 +85,7 @@ const getPaginatedBookings = (bookings) => {
         </Flex></Flex>
       
       <TableContainer borderRadius="10px" mt="140px" boxShadow= "lg">
-        <Table size="lg" bg="white">
+        <Table size="md" bg="white">
           <Thead>
         <Tr>
           <Th>ID</Th>
@@ -70,22 +96,26 @@ const getPaginatedBookings = (bookings) => {
           <Th>Check-out</Th>
           <Th isNumeric>No. of guests</Th>
           <Th>Status</Th>
+          <Th>Book Date</Th>
           <Th></Th>
         </Tr>
       </Thead>
       <Tbody>
       
-            <Tr >
-              <Td>asfa</Td>
-              <Td>asfas</Td>
-              <Td>asfa</Td>
-              <Td>asfsaf</Td>
-              <Td>asfasf</Td>
-              <Td>asfasf</Td>
-              <Td isNumeric>asfasf</Td>
-              <Td>Status</Td>
-              <Td></Td>
-            </Tr>
+      {getPaginatedBookings(bookingData).map((booking) => (
+              <Tr key={booking.id}>
+                <Td>{String(booking.id).padStart(3,'0')}</Td>
+                <Td>{booking.guest_name}</Td>
+                <Td></Td>
+                <Td></Td>
+                
+                <Td>{getDate(booking.check_in_date)}</Td>
+                <Td>{getDate(booking.check_out_date)}</Td>
+                <Td isNumeric></Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+            ))}
           
         </Tbody>
 
