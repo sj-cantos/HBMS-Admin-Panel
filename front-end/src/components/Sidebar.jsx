@@ -56,7 +56,7 @@ const Sidebar = ({admin}) => {
                             changeNavSize("small")
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" to={'/'} description="This is the description for the dashboard." />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" to={'/'} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Bookings" to={'/bookings'} />
                 <NavItem navSize={navSize} icon={FiUser} title="Rooms" to={'/rooms'} />
                 <NavItem navSize={navSize} icon={FiPieChart} title="Analytics" to={'/analytics'}/>
@@ -75,7 +75,7 @@ const Sidebar = ({admin}) => {
                     <Avatar size="sm" src="avatar-1.jpg" />
                     <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">{admin}</Heading>
-                        <Text fontWeight="normal" color="white">Admin</Text>
+                        <Text fontWeight="normal" color="white">Shannon</Text>
                     </Flex>
                 </Flex>
             </Flex>

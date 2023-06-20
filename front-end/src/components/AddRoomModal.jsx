@@ -138,7 +138,7 @@ const handleSave = async (e) => {
             <Button variant="ghost" onClick={handleClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" mr={3} onClick={handleSave}>
+            <Button colorScheme="teal" mr={3} onClick={handleSave}>
               Save
             </Button>
           </ModalFooter>

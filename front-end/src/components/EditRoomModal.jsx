@@ -82,7 +82,7 @@ const EditRoomModal = ({ isOpen, onClose, roomData, onSubmit }) => {
             {/* Add more form fields as needed */}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+            <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>
