@@ -27,15 +27,47 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AddBookingModal from '../components/AddBookingModal';
+import EditBookingModal from '../components/EditBookingModal';
 
 const Bookings = () => {
   const [bookingData,setBookingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
   const totalPages = Math.ceil(bookingData.length / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const[roomsData,setRoomsData] = useState([]);
+
+  useEffect(() => {
+    const getRooms = () => {
+      axios
+        .get('http://localhost:3003/rooms')
+        .then((response) => setRoomsData(response.data))
+        .catch((error) => console.log(error));
+    };
+    getRooms();
+    return () => {
+        
+    }
+  }, []);
+
+
+  const openEditModal = bookingId => {
+    setSelectedBookingId(bookingId);
+    setEditModalOpen(true);
+  };
   
+  const closeEditModal = () => {
+    setSelectedBookingId(null);
+    setEditModalOpen(false);
+  };
   
+  const onSubmit = async (data) => {
+    await console.log(data)
+  }
+
   const getPaginatedBookings = (bookings) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -119,8 +151,8 @@ const Bookings = () => {
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>     
                   </MenuButton>
                     <MenuList>
-                      <MenuItem icon={<EditIcon/>} onClick={() => handleEdit(item.id)}>Edit</MenuItem>
-                      <MenuItem icon={<DeleteIcon/>}onClick={()=>handleDelete(item.id)}>Delete</MenuItem>
+                      <MenuItem icon={<EditIcon/>} onClick={() => openEditModal(booking.id)}>Edit</MenuItem>
+                      <MenuItem icon={<DeleteIcon/>}onClick={()=>handleDelete(booking.id)}>Delete</MenuItem>
                     </MenuList>
                 </Menu>
                 </Td>
@@ -146,6 +178,15 @@ const Bookings = () => {
           </Button>
         ))}
       </ButtonGroup>
+
+      <EditBookingModal
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        bookingId={selectedBookingId}
+        bookingData={bookingData}
+        roomsData={roomsData} 
+      />      
+      
     
     </Stack>
   )
