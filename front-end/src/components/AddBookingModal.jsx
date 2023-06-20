@@ -17,12 +17,13 @@ import {
   useToast,
   MenuItem,
   FormErrorMessage,
+  Toast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { Menu, MenuButton, MenuList } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
-import { Radio, RadioGroup } from '@chakra-ui/react';
+import { Radio, RadioGroup} from '@chakra-ui/react';
 
 const AddBookingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ const AddBookingModal = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [formErrors, setFormErrors] = useState({});
-
+  const toast = useToast();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -41,7 +42,7 @@ const AddBookingModal = () => {
     setIsOpen(false);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const { name, email, room_type, book_date, check_in_date, check_out_date, num_guests, status } = newBookData;
 
     // Check if any required field is empty
@@ -61,6 +62,30 @@ const AddBookingModal = () => {
     }
 
    console.log(newBookData);
+   try {
+    const data = await axios.post('http://localhost:3003/booking/',newBookData)
+    console.log(data)
+    toast({
+      title: "Success",
+      description: "Booking details added successfully.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: 'top'
+    });
+    handleClose();
+
+  } catch(error){
+    console.log(error);
+    toast({
+      title: 'Error',
+      description: 'An error occurred while submitting the booking data.',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+      position: 'top',
+    });
+  }
    handleClose()
   
   };
