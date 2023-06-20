@@ -61,14 +61,15 @@ const AddBookingModal = () => {
     }
 
    console.log(newBookData);
+   handleClose()
+  
   };
 
   const handleSelect = (value) => {
-
     setSelectedValue(value);
-    setNewBookData({...newBookData, room_type: selectedValue})
+    setNewBookData((prevData) => ({ ...prevData, room_type: value }));
+    setFormErrors((prevErrors) => ({ ...prevErrors, room_type: '' }));
   };
-
   const handleInputChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -126,7 +127,7 @@ const AddBookingModal = () => {
                     </MenuButton>
                     <MenuList>
                       {roomsData.map((roomtype) => (
-                        <MenuItem key={roomtype.id} onClick={() => handleSelect(roomtype.name)}>
+                        <MenuItem key={roomtype.id} onClick={() => handleSelect(roomtype.name)} >
                           {roomtype.name}
                         </MenuItem>
                       ))}
@@ -137,7 +138,7 @@ const AddBookingModal = () => {
                     value={selectedValue}
                     placeholder="Selected Room Type"
                     isReadOnly
-                    onChange={(e) => setNewBookData({ ...newBookData, room_type: e.target.value })}
+                    onChange={handleInputChange}
                     isRequired
                   />
                 </Flex>
