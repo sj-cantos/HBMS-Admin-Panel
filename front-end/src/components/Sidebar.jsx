@@ -74,8 +74,8 @@ const Sidebar = ({admin}) => {
                 <Flex mt={4} align="center">
                     <Avatar size="sm" src="avatar-1.jpg" />
                     <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
-                        <Heading as="h3" size="sm">{admin}</Heading>
-                        <Text fontWeight="normal" color="white">Shannon</Text>
+                        <Heading as="h3" size="sm">Admin</Heading>
+                        <Text fontWeight="normal" color="white">{admin ? admin : 'none'}</Text>
                     </Flex>
                 </Flex>
             </Flex>
