@@ -51,4 +51,49 @@ booking.post('/',(req,res)=>{
  
 
 })
+
+
+booking.put('/:id',(req,res)=>{
+  const {guest_name,email,room_type,booking_date,check_in_date,check_out_date,num_guests,status_name} = req.body;
+  const bookId = req.params;
+    pool.execute('SELECT id FROM status WHERE status_name = ?',[status_name],(err,status_result)=>{
+      if(err){
+        console.log("Error after querying on status",err);
+        res.status(500).json({status:500,message:"DB Error after query"})
+        return;
+      }else{
+        const status_id = status_result[0].id;
+        pool.execute('SELECT id FROM room_types WHERE room_type = ?',[room_type],(err,roomtypes_res)=>{
+          if(err){
+            console.log("Error after querying on status",err)
+            res.status(500).json({status:500,message:"Server Error after query"})
+            return;
+          }else {
+            const room_id = roomtypes_res[0].id;
+            pool.execute(`UPDATE hotel_bookings SET guest_name = ?,email = ?, room_type = ?, booking_date = ?, check_in_date = ?, 
+                           check_out_date = ?, num_guests = ?, status_id = ? WHERE id = ?`,[
+                            guest_name,
+                            email,
+                            room_id,
+                            booking_date,
+                            check_in_date,
+                            check_out_date,
+                            num_guests,
+                            status_id,
+                            bookId
+                           ],(err,res)=>{
+              if(err){
+                console.log("Update query error",err)
+                res.status(500).json({status:500,message:"Server Error"})
+              }else {
+                res.status(200).json({status:200,message:"Updated successfully"})
+                console.log("Booking updated successfully")
+              }
+
+            })
+          }
+        })
+      }
+    })
+})
 module.exports = booking;
