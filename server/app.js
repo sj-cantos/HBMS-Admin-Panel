@@ -6,7 +6,10 @@ const PORT = process.env.PORT || 3003;
 const cors = require('cors');
 require('./shownet')(PORT);
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5173'
+}));
 
 require('dotenv').config();  // load .env variables
 
@@ -38,6 +41,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+    sameSite: false, // 'none' for production.
     secure: false, // false to enable sending cookings over HTTP, set true if deployed to production with HTTPS.
     httpOnly: true, // cookies cannot be accessed by the client side javascript code.
     maxAge: 60000, // 60 seconds before a session expires.

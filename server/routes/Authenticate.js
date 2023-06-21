@@ -9,10 +9,14 @@ const checkAuth = require('./CheckAuth');
 
 // ----------------------- login route ----------------------- 
 
-// localhost:PORT/login
-authenticate.get('/', (req, res) => {
-  // send the built react app html file here during production.
-  res.sendFile('index.html', { root: './public'});
+// localhost:PORT/login - temporary disabled in development.
+// authenticate.get('/', (req, res) => {
+//   // send the built react app html file here during production.
+//   res.sendFile('index.html', { root: './public'});
+// });
+
+authenticate.get('/check', checkAuth, (req, res) => {
+  res.status(200).json({user: req.user.id});
 });
 
 // localhost:PORT/login

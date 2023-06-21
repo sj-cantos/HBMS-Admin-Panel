@@ -11,18 +11,35 @@ import LogIn from './pages/LogIn'
 
 
 const Layout = () => {
-
-  //set the login state temporarily to false in order to view the login page
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState('');
 
-  const handleLogin = (loggedInUser) => {
-    // Perform login authentication here (e.g., API call)
-    // If login is successful, set loggedIn state to true
+  React.useEffect(() => {
+    fetch('http://localhost:3003/login/check', {
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 200) {
+        response.json().then(data => {
+          setLoggedIn(true);
+          setUser(data.user);
+        }).catch(() => {
+          setLoggedIn(false);
+        })
+      } else {
+        setLoggedIn(false);
+      }
+    }).catch(() => setLoggedIn(false));
+  }, []);
+
+  const setLoggedInUser = (loggedInUser) => {
     setLoggedIn(true);
     setUser(loggedInUser);
-    
   };
+  
   const [navSize, changeNavSize] = useState("large")
   return (
     <Box bg="white.300">
@@ -40,7 +57,7 @@ const Layout = () => {
               </Flex>
             </Flex>
           ) : (
-            <LogIn handleLogin={handleLogin} />
+            <LogIn setLoggedInUser={setLoggedInUser} />
           )}
         </BrowserRouter>
     </Box>
