@@ -24,6 +24,7 @@ import { Menu, MenuButton, MenuList } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
 import { Radio, RadioGroup} from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react'
 
 const AddBookingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +34,7 @@ const AddBookingModal = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -65,6 +67,7 @@ const AddBookingModal = () => {
    try {
     const data = await axios.post('http://localhost:3003/booking/',newBookData)
     console.log(data)
+    setIsLoading(true);
     toast({
       title: "Success",
       description: "Booking details added successfully.",
@@ -241,12 +244,14 @@ const AddBookingModal = () => {
             <Button variant="ghost" onClick={handleClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" mr={3} onClick={handleSave} type='submit'>
+            {isLoading?(<Spinner size="md"/>):
+            (<Button colorScheme="blue" mr={3} onClick={handleSave} type='submit'>
               Save
-            </Button>
+            </Button>)}
           </ModalFooter>
         </ModalContent>
       </Modal>
+      
     </div>
   );
 };
