@@ -1,17 +1,29 @@
-import React from 'react'
+import React from 'react';
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   TableContainer,
   Text,
-  Image,Button, useDisclosure,Flex, Input,Stack, IconButton, useToast
-} from '@chakra-ui/react'
+  Image,
+  Button,
+  useDisclosure,
+  Flex,
+  Input,
+  Stack,
+  IconButton,
+  useToast,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+} from '@chakra-ui/react';
 import {
   Menu,
   MenuButton,
@@ -20,17 +32,17 @@ import {
   MenuItemOption,
   MenuGroup,
   MenuOptionGroup,
-  MenuDivider,ButtonGroup
-} from '@chakra-ui/react'
-import { EditIcon, SearchIcon, DeleteIcon,ChevronDownIcon } from '@chakra-ui/icons';
+  MenuDivider,
+  ButtonGroup
+} from '@chakra-ui/react';
+import { EditIcon, SearchIcon, DeleteIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import AddBookingModal from '../components/AddBookingModal';
 import EditBookingModal from '../components/EditBookingModal';
 
 const Bookings = () => {
-  const [bookingData,setBookingData] = useState([]);
+  const [bookingData, setBookingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(bookingData.length / itemsPerPage);
@@ -38,24 +50,62 @@ const Bookings = () => {
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
-  const[roomsData,setRoomsData] = useState([]);
+  const [roomsData, setRoomsData] = useState([]);
+  const cancelRef = useRef();
 
-  
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedBookingDeleteId, setSelectedBookingDeleteId] = useState(null);
+  const toast = useToast();
+  const confirmDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3003/booking/${id}`);
+      const updatedBookingData = bookingData.filter((booking) => booking.id !== id);
+      setBookingData(updatedBookingData);
+      console.log("Deleted booking with ID: " + id);
+      setIsDeleteDialogOpen(false);
+      toast({
+        title: "Success",
+        description: "Booking data deleted successfully.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: 'top'
+      });
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      toast({
+        title: "Error",
+        description: "Error occured while deleting data",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: 'top'
+      });
+    }
+  };
 
+  const handleDelete = (id) => {
+    setSelectedBookingDeleteId(id);
+    setIsDeleteDialogOpen(true);
+  };
 
-  const openEditModal = bookingId => {
+  useEffect(() => {
+    console.log(selectedBookingDeleteId);
+  }, [selectedBookingDeleteId]);
+
+  const openEditModal = (bookingId) => {
     setSelectedBookingId(bookingId);
     setEditModalOpen(true);
   };
-  
+
   const closeEditModal = () => {
     setSelectedBookingId(null);
     setEditModalOpen(false);
   };
-  
-  const onSubmit = async (data,id) => {
-    
-  }
+
+  const onSubmit = async (data, id) => {
+    // Handle form submission
+  };
 
   const getPaginatedBookings = (bookings) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -63,37 +113,38 @@ const Bookings = () => {
     return bookings.slice(startIndex, endIndex);
   };
 
-  const getDate = (datetime)=> {
+  const getDate = (datetime) => {
     const date = new Date(datetime);
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formatDate = date.toLocaleDateString(undefined,options);
-    
+    const formatDate = date.toLocaleDateString(undefined, options);
+
     return formatDate;
-  }
+  };
 
-  useEffect(()=>{
-    const getBookings = ()=>{
-      axios.get('http://localhost:3003/booking')
-      .then(response=> {console.log(response.data); setBookingData(response.data)})
-      .catch(error => console.log(error))
-    }
-    getBookings();
-    return () => {
-      
+  useEffect(() => {
+    const getBookings = () => {
+      axios
+        .get('http://localhost:3003/booking')
+        .then((response) => {
+          console.log(response.data);
+          setBookingData(response.data);
+        })
+        .catch((error) => console.log(error));
     };
-  
+    getBookings();
+  }, []);
 
-  },[]);
+  const handleDeleteClick = (id) => {
+    handleDelete(id);
+  };
 
-
-
-  
   return (
     <Stack minWidth="100%">
-      
       <Text>Bookings</Text>
-      <Flex justifyContent="space-between" position="relative" top="125px"><AddBookingModal/><Flex alignItems="center">
-          <Input placeholder="Search Rooms" width="500px" colorScheme='white' />
+      <Flex justifyContent="space-between" position="relative" top="125px">
+        <AddBookingModal />
+        <Flex alignItems="center">
+          <Input placeholder="Search Rooms" width="500px" colorScheme="white" />
           <IconButton
             icon={<SearchIcon />}
             aria-label="Search"
@@ -102,60 +153,61 @@ const Bookings = () => {
             color="tertiary"
             borderColor="tertiary"
             variant="outline"
-            
           />
-        </Flex></Flex>
-      
-      <TableContainer borderRadius="10px" mt="140px" boxShadow= "lg">
+        </Flex>
+      </Flex>
+
+      <TableContainer borderRadius="10px" mt="140px" boxShadow="lg">
         <Table size="md" bg="white">
           <Thead>
-        <Tr>
-          <Th>ID</Th>
-          <Th>Guest Name</Th>
-          <Th>Email</Th>
-          <Th>Room Type</Th>
-          <Th>Book Date</Th>
-          <Th>Check-in</Th>
-          <Th>Check-out</Th>
-          <Th isNumeric>Guests</Th>
-          <Th>Status</Th>
-          <Th>Actions</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-      
-      {getPaginatedBookings(bookingData).map((booking) => (
-              <Tr key={booking.id}>
-                <Td>{String(booking.id).padStart(3,'0')}</Td>
-                <Td>{booking.guest_name}</Td>
-                <Td>{booking.email}</Td>
-                <Td>{booking.room_type}</Td>
-                <Td>{getDate(booking.booking_date)}</Td>
-                <Td>{getDate(booking.check_in_date)}</Td>
-                <Td>{getDate(booking.check_out_date)}</Td>
-                <Td  isNumeric width="10px">{booking.num_guests}</Td>
-                <Td>{booking.status_name}</Td>
-                <Td>
-                <Menu>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>     
-                  </MenuButton>
-                    <MenuList>
-                      <MenuItem icon={<EditIcon/>} onClick={() => openEditModal(booking.id)}>Edit</MenuItem>
-                      <MenuItem icon={<DeleteIcon/>}onClick={()=>handleDelete(booking.id)}>Delete</MenuItem>
-                    </MenuList>
-                </Menu>
-                </Td>
-              </Tr>
-            ))}
-          
-        </Tbody>
-
+            <Tr>
+              <Th>ID</Th>
+              <Th>Guest Name</Th>
+              <Th>Email</Th>
+              <Th>Room Type</Th>
+              <Th>Book Date</Th>
+              <Th>Check-in</Th>
+              <Th>Check-out</Th>
+              <Th isNumeric>Guests</Th>
+              <Th>Status</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {getPaginatedBookings(bookingData).map((booking) => {
+              return (
+                <Tr key={parseInt(booking.id)}>
+                  <Td>{String(booking.id).padStart(3, '0')}</Td>
+                  <Td>{booking.guest_name}</Td>
+                  <Td>{booking.email}</Td>
+                  <Td>{booking.room_type}</Td>
+                  <Td>{getDate(booking.booking_date)}</Td>
+                  <Td>{getDate(booking.check_in_date)}</Td>
+                  <Td>{getDate(booking.check_out_date)}</Td>
+                  <Td isNumeric width="10px">
+                    {booking.num_guests}
+                  </Td>
+                  <Td>{booking.status_name}</Td>
+                  <Td>
+                    <Menu>
+                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}></MenuButton>
+                      <MenuList>
+                        <MenuItem icon={<EditIcon />} onClick={() => openEditModal(booking.id)}>
+                          Edit
+                        </MenuItem>
+                        <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteClick(booking.id)}>
+                          Delete
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
         </Table>
-      
-
       </TableContainer>
 
-      
       <ButtonGroup>
         {pageNumbers.map((pageNumber) => (
           <Button
@@ -173,13 +225,35 @@ const Bookings = () => {
         onClose={closeEditModal}
         bookingId={selectedBookingId}
         bookingData={bookingData}
-        roomsData={roomsData} 
-        setBookingData = {setBookingData}
-      />      
-      
-    
-    </Stack>
-  )
-}
+        roomsData={roomsData}
+        setBookingData={setBookingData}
+      />
 
-export default Bookings
+      <AlertDialog
+        isOpen={isDeleteDialogOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={() => setIsDeleteDialogOpen(false)}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Delete Booking
+          </AlertDialogHeader>
+
+          <AlertDialogBody>Are you sure you want to delete this booking?</AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button colorScheme="red" onClick={() => confirmDelete(selectedBookingDeleteId)} ml={3}>
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </Stack>
+  );
+};
+
+export default Bookings;

@@ -11,17 +11,18 @@ import {
   import { useState } from 'react'
   import axios from 'axios'
 
-const DeleteDialog = ({ isOpen, onClose, roomId, onDelete }) => {
+const DeleteDialog = ({ isOpen, onClose, bookId, onDelete }) => {
     const cancelRef = React.useRef();
     const toast = useToast();
 
     const confirmDelete = async () => {
         try {
-          await axios.delete(`http://localhost:3003/rooms/${roomId}`);
-          onDelete(roomId);
+          console.log(bookId)
+          await axios.delete(`http://localhost:3003/booking/${bookId}`);
+          onDelete(bookId);
           toast({
             title: "Success",
-            description: "Room data deleted successfully.",
+            description: "Booking data deleted successfully.",
             status: "success",
             duration: 5000,
             isClosable: true,
@@ -32,9 +33,9 @@ const DeleteDialog = ({ isOpen, onClose, roomId, onDelete }) => {
           console.log(error);
           toast({
             title: 'Error',
-            description: 'An error occurred while deleting the room data.',
+            description: 'An error occurred while deleting the booking data.',
             status: 'error',
-            duration: 3000,
+            duration: 5000,
             isClosable: true,
             position: 'top',
           });
@@ -52,7 +53,7 @@ const DeleteDialog = ({ isOpen, onClose, roomId, onDelete }) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Delete Room
+              Delete Booking
             </AlertDialogHeader>
 
             <AlertDialogBody>
