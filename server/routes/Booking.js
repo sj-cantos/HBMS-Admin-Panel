@@ -52,10 +52,15 @@ booking.post('/',(req,res)=>{
 
 })
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+const isoString = date.toISOString();
+return isoString.split('T')[0];
+};
 
 booking.put('/:id',(req,res)=>{
   const {guest_name,email,room_type,booking_date,check_in_date,check_out_date,num_guests,status_name} = req.body;
-  const bookId = req.params;
+  const bookId = req.params.id;
     pool.execute('SELECT id FROM status WHERE status_name = ?',[status_name],(err,status_result)=>{
       if(err){
         console.log("Error after querying on status",err);
@@ -75,19 +80,21 @@ booking.put('/:id',(req,res)=>{
                             guest_name,
                             email,
                             room_id,
-                            booking_date,
-                            check_in_date,
-                            check_out_date,
+                            formatDate(booking_date),
+                            formatDate(check_in_date),
+                            formatDate(check_out_date),
                             num_guests,
                             status_id,
                             bookId
-                           ],(err,res)=>{
+                           ],(err,result)=>{
               if(err){
                 console.log("Update query error",err)
                 res.status(500).json({status:500,message:"Server Error"})
+                return;
               }else {
                 res.status(200).json({status:200,message:"Updated successfully"})
                 console.log("Booking updated successfully")
+                return;
               }
 
             })
