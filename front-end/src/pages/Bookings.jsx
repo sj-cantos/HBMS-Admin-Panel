@@ -40,18 +40,7 @@ const Bookings = () => {
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const[roomsData,setRoomsData] = useState([]);
 
-  useEffect(() => {
-    const getRooms = () => {
-      axios
-        .get('http://localhost:3003/rooms')
-        .then((response) => setRoomsData(response.data))
-        .catch((error) => console.log(error));
-    };
-    getRooms();
-    return () => {
-        
-    }
-  }, []);
+  
 
 
   const openEditModal = bookingId => {
@@ -64,8 +53,8 @@ const Bookings = () => {
     setEditModalOpen(false);
   };
   
-  const onSubmit = async (data) => {
-    await console.log(data)
+  const onSubmit = async (data,id) => {
+    
   }
 
   const getPaginatedBookings = (bookings) => {
@@ -185,6 +174,7 @@ const Bookings = () => {
         bookingId={selectedBookingId}
         bookingData={bookingData}
         roomsData={roomsData} 
+        setBookingData = {setBookingData}
       />      
       
     

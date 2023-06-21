@@ -19,7 +19,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Radio, RadioGroup} from '@chakra-ui/react';
 import axios from 'axios';
 
-const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, onSubmit}) => {
+const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingData}) => {
   const [updatedBookingData, setUpdatedBookingData] = useState(null);
   const [roomsData,setRoomsData] = useState([]);
   
@@ -38,10 +38,8 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, onSubmit}) 
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const isoString = date.toISOString();
+  return isoString.split('T')[0];
   };
 
   const handleInputChange = (e) => {
@@ -63,21 +61,44 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, onSubmit}) 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    /*onSubmit(updatedBookingData)
-      .then(() => {
-        toast({
-          title: 'Success',
-          description: 'Booking details edited successfully.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top'
+    axios
+    .put(`http://localhost:3003/booking/${bookingId}`, updatedBookingData)
+    .then((response) => {
+      console.log(response.data);
+      // Call the onSubmit function passed as prop to handle the updated data
+      
+      setBookingData((prevData) => {
+        const updatedData = prevData.map((booking) => {
+          if (booking.id === bookingId) {
+            return { ...booking, ...updatedBookingData };
+          }
+          return booking;
         });
-        onClose();
-      })
-      .catch((error) => console.log(error));
-  };*/
-console.log(updatedBookingData)
+        return updatedData;
+      });
+      toast({
+        title: 'Update success',
+        description: 'Updated booking details successfully.',
+        status: 'success',
+        position: 'top',
+        duration: 5000,
+        isClosable: true,
+      });
+      onClose();
+    })
+    .catch((error) => {
+      console.log(error);
+      // Display an error toast message
+      toast({
+        title: 'Error',
+        description: 'Failed to update booking.',
+        status: 'error',
+        position: 'top',
+        duration: 5000,
+        isClosable: true,
+      });
+    });
+    console.log(updatedBookingData)
 }
 
   if (!updatedBookingData) {
@@ -114,11 +135,11 @@ console.log(updatedBookingData)
                 </MenuList>
               </Menu>
               <FormLabel>Book Date</FormLabel>
-              <Input name="booking_date" type='date' value={updatedBookingData?formatDate(updatedBookingData.booking_date):''} onChange={handleInputChange} />
+              <Input name="booking_date" type='date' value={updatedBookingData?formatDate(updatedBookingData.booking_date):''} onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,booking_date: formatDate(value)}))} />
               <FormLabel>Check in</FormLabel>
-              <Input type = "date" name="check_in_date" value={updatedBookingData?formatDate(updatedBookingData.check_in_date):'' } onChange={handleInputChange} />
+              <Input type = "date" name="check_in_date" value={updatedBookingData?formatDate(updatedBookingData.check_in_date):'' } onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,check_in_date_date: formatDate(value)}))} />
               <FormLabel>Check out</FormLabel>
-              <Input type = "date" name="check_out_date" value={updatedBookingData?formatDate(updatedBookingData.check_out_date):''} onChange={handleInputChange} />
+              <Input type = "date" name="check_out_date" value={updatedBookingData?formatDate(updatedBookingData.check_out_date):''} onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,check_out_date: formatDate(value)}))} />
               <FormLabel>Number of guests</FormLabel>
               <Input type = "number" name="num_guests" value={updatedBookingData.num_guests} onChange={handleInputChange} />
               <FormLabel>Status</FormLabel>
