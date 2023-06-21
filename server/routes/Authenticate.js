@@ -9,11 +9,11 @@ const checkAuth = require('./CheckAuth');
 
 // ----------------------- login route ----------------------- 
 
-// localhost:PORT/login
-authenticate.get('/', (req, res) => {
-  // send the built react app html file here during production.
-  res.sendFile('index.html', { root: './public'});
-});
+// localhost:PORT/login - temporary disabled in development.
+// authenticate.get('/', (req, res) => {
+//   // send the built react app html file here during production.
+//   res.sendFile('index.html', { root: './public'});
+// });
 
 // localhost:PORT/login
 authenticate.post('/', passport.authenticate('local'), function(req, res) {
