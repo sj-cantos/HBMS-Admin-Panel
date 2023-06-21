@@ -15,6 +15,10 @@ const checkAuth = require('./CheckAuth');
 //   res.sendFile('index.html', { root: './public'});
 // });
 
+authenticate.get('/check', checkAuth, (req, res) => {
+  res.status(200).json({user: req.user.id});
+});
+
 // localhost:PORT/login
 authenticate.post('/', passport.authenticate('local'), function(req, res) {
   res.json({ msg: "Login Success", code: 200 });
