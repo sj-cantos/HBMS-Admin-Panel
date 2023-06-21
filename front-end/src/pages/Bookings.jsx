@@ -56,6 +56,9 @@ const Bookings = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedBookingDeleteId, setSelectedBookingDeleteId] = useState(null);
   const toast = useToast();
+  const [searchQuery, setSearchQuery] = useState('');
+
+
   const confirmDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:3003/booking/${id}`);
@@ -108,9 +111,12 @@ const Bookings = () => {
   };
 
   const getPaginatedBookings = (bookings) => {
+    const filteredBookings = bookings.filter((booking) =>
+    booking.guest_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return bookings.slice(startIndex, endIndex);
+    return filteredBookings.slice(startIndex, endIndex);
   };
 
   const getDate = (datetime) => {
@@ -124,7 +130,7 @@ const Bookings = () => {
   useEffect(() => {
     const getBookings = () => {
       axios
-        .get('http://localhost:3003/booking')
+        .get('http://localhost:3003/booking',{params:{search:searchQuery}})
         .then((response) => {
           console.log(response.data);
           setBookingData(response.data);
@@ -136,6 +142,7 @@ const Bookings = () => {
 
   const handleDeleteClick = (id) => {
     handleDelete(id);
+    setSearchQuery('');
   };
 
   return (
@@ -144,7 +151,8 @@ const Bookings = () => {
       <Flex justifyContent="space-between" position="relative" top="125px">
         <AddBookingModal />
         <Flex alignItems="center">
-          <Input placeholder="Search Rooms" width="500px" colorScheme="white" />
+          <Input placeholder="Search Bookings" width="500px" colorScheme="white" value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}/>
           <IconButton
             icon={<SearchIcon />}
             aria-label="Search"
