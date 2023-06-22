@@ -117,9 +117,11 @@ const Rooms = () => {
   
   return filteredRooms.slice(startIndex, endIndex);
   };
+
+
   return (
     <Stack>
-      <Text>Rooms</Text>
+      <Text color="teal.900" fontSize="35px" fontWeight="normal">Rooms</Text>
       <Flex justifyContent="space-between">
         <AddRoomModal />
         <Flex alignItems="center">

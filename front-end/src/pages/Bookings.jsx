@@ -153,8 +153,8 @@ const Bookings = () => {
   };
   return (
     <Stack minWidth="100%">
-      <Text>Bookings</Text>
-      <Flex justifyContent="space-between" position="relative" top="125px">
+      <Text color="teal.900" fontSize="35px" fontWeight="normal">Bookings</Text>
+      <Flex justifyContent="space-between" position="relative" top="90px">
         <AddBookingModal />
         <Flex alignItems="center">
           <Input placeholder="Search Bookings" width="500px" colorScheme="white" value={searchQuery}
@@ -171,7 +171,7 @@ const Bookings = () => {
         </Flex>
       </Flex>
 
-      <TableContainer borderRadius="10px" mt="140px" boxShadow="lg">
+      <TableContainer borderRadius="10px" mt="100px" boxShadow="lg">
         <Table size="md" bg="white">
           <Thead>
             <Tr>
