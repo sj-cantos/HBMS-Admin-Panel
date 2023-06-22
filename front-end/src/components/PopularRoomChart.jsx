@@ -32,7 +32,7 @@ const PopularRoomChart = () => {
   return (
     <div>
       {chartData.length > 0 ? (
-        <ReactApexChart options={chartOptions} series={chartOptions.series} type="donut" height={320} />
+        <ReactApexChart options={chartOptions} series={chartOptions.series} type="donut" height={400} />
       ) : (
         <p>No data available</p>
       )}
