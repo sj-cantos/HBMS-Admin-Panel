@@ -1,11 +1,15 @@
 import React from 'react'
 import {
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,Input, Button, Text
-  } from '@chakra-ui/react'
-
+  Flex,
+  Heading,
+  Input,
+  Button,
+  FormControl,
+  FormLabel,
+  Switch,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react';
   //Sample Login componenent
 const LogIn = ({setLoggedInUser}) => {
   const [adminUser, setAdminUser] = React.useState('');
@@ -47,14 +51,34 @@ const LogIn = ({setLoggedInUser}) => {
   return (
     <div>
       <form method='post'>
-        <FormControl isRequired>
-          <FormLabel>Email address</FormLabel>
-          <Input id='email' type='text' placeholder='Email/Username' required onChange={(e) => setAdminUser(e.target.value)}/>
-          <FormLabel>Password</FormLabel>
-          <Input id='password' type="password" placeholder='Password' required onChange={(e) => setPassword(e.target.value)}/>
-          <Input type="submit" value="Login" onClick={handleSubmit}/>
-          <Text>{feedback}</Text>
-        </FormControl>
+      <Flex h="100vh" alignItems="center" justifyContent="center">
+      <Flex
+        flexDirection="column"
+        p={12}
+        borderRadius={8}
+        boxShadow="lg"
+      >
+        <Heading mb={6}>Log In</Heading>
+        <Input
+          placeholder="johndoe@gmail.com"
+          type="email"
+          variant="filled"
+          mb={3}
+          onChange={(e)=>{setAdminUser(e.target.value)}}
+        />
+        <Input
+          placeholder="**********"
+          type="password"
+          variant="filled"
+          mb={6}
+          onChange={(e)=>{setPassword(e.target.value)}}
+        />
+        <Button colorScheme="teal" mb={8} onClick={handleSubmit}>
+          Log In
+        </Button>
+      
+      </Flex>
+    </Flex>
       </form>
     </div>
   )

@@ -37,7 +37,7 @@ const DailyBookingChart = () => {
     dataLabels:{
         enabled: false
     },
-    colors: ['#008080']
+    colors: ['#00c7b6']
   };
 
   const chartSeries = [
