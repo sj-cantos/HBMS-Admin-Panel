@@ -56,7 +56,7 @@ const DailyBookingChart = () => {
             series={chartSeries}
             type="area"
             height={240}
-            width={650}
+            width={700}
         />
       </Box>
      

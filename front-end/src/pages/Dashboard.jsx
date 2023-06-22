@@ -8,7 +8,7 @@ import axios from 'axios'
 import { useState } from 'react';
 import DailyBookingChart from '../components/DailyBookingChart';
 import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
-
+import PopularRoomChart from '../components/PopularRoomChart';
 
 
 const Dashboard = () => {
@@ -92,33 +92,41 @@ const Dashboard = () => {
         </Box>
         <Flex mt="-170px" ml="20px" ><DailyBookingChart/></Flex>
       </Flex>
-      <Stack>
-        <Text color="teal.800" fontWeight="semibold" mt="5px">Recent Bookings</Text>
-        <Box>
-        <Table bgColor="white" borderRadius="10px" shadow="lg" width="700px">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Check in</Th>
-            <Th>Check out</Th>
-            <Th>No. of Guests</Th>
-           
-          </Tr>
-        </Thead>
-        <Tbody>
-          {recentBookings.map((booking) => (
-            <Tr key={booking.id}>
-              <Td>{booking.guest_name}</Td>
-              <Td>{getDate(booking.check_in_date)}</Td>
-              <Td>{getDate(booking.check_out_date)}</Td>
-              <Td>{booking.num_guests}</Td>
-              {/* Add more cells as needed */}
+      <Flex>
+        <Stack >
+          <Text color="teal.800" fontWeight="semibold" mt="5px">Popular Rooms</Text>
+          <Box  bg="white" p={4} borderRadius="10px" shadow="lg" h="307px" width="500px">
+            <PopularRoomChart/>
+          </Box>
+        </Stack>
+        <Stack ml="55px">
+          <Text color="teal.800" fontWeight="semibold" mt="5px">Recent Bookings</Text>
+          <Box>
+          <Table bgColor="white" borderRadius="10px" shadow="lg" width="700px">
+          <Thead>
+            <Tr>
+              <Th>Name</Th>
+              <Th>Check in</Th>
+              <Th>Check out</Th>
+              <Th>No. of Guests</Th>
+            
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-        </Box>
-      </Stack>
+          </Thead>
+          <Tbody>
+            {recentBookings.map((booking) => (
+              <Tr key={booking.id}>
+                <Td>{booking.guest_name}</Td>
+                <Td>{getDate(booking.check_in_date)}</Td>
+                <Td>{getDate(booking.check_out_date)}</Td>
+                <Td>{booking.num_guests}</Td>
+                {/* Add more cells as needed */}
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+          </Box>
+        </Stack>
+      </Flex>
       
     </Box>
   );
