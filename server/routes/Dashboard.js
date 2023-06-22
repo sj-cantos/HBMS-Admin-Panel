@@ -109,4 +109,33 @@ dashboard.get('/recent-bookings',(req,res)=>{
 })
 
 
+dashboard.get('/popular-rooms', (req, res) => {
+  // Construct the SQL query to fetch the most popular rooms
+  const query = `
+  SELECT hb.room_type, rt.room_type, COUNT(*) AS booking_count
+  FROM hotel_bookings hb
+  JOIN room_types rt ON hb.room_type = rt.id
+  GROUP BY hb.room_type, rt.room_type
+  ORDER BY booking_count DESC
+  LIMIT 5;
+  `;
+
+  // Execute the query
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error('Error retrieving popular rooms:', error);
+      res.status(500).json({ error: 'Failed to retrieve popular rooms' });
+    } else {
+      const popularRoomsData = results.map((row) => ({
+        name: row.room_type,
+        value: row.booking_count,
+      }));
+
+      res.json(popularRoomsData);
+    }
+  });
+});
+
+
+
 module.exports = dashboard;
