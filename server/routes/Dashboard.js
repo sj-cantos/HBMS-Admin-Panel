@@ -11,20 +11,20 @@ dashboard.get('/test', checkAuth, (req, res) => {
 dashboard.get('/widget', (req, res) => {
   const today = new Date().toISOString().split('T')[0];
 
-  pool.execute(`SELECT COUNT(*) AS totalBookings FROM hotel_bookings`, (err, countRes) => {
+  pool.execute(`SELECT COUNT(*) AS totalBookings FROM hotel_bookings WHERE booking_date = ?`,[today], (err, countRes) => {
     if (err) {
       res.status(500).json({ status: 500, message: "Server Error" });
       console.log(err);
     } else {
       const totalBookings = countRes[0].totalBookings;
 
-      pool.execute(`SELECT SUM(num_guests) AS totalGuests FROM hotel_bookings`, (err, guestRes) => {
+      pool.execute(`SELECT SUM(CAST(num_guests AS UNSIGNED)) AS totalGuests FROM hotel_bookings WHERE booking_date = ?`,[today], (err, guestRes) => {
         if (err) {
           res.status(500).json({ status: 500, message: "Server Error" });
           console.log(err);
         } else {
           const totalGuests = guestRes[0].totalGuests;
-
+          
           pool.execute(
             `SELECT COUNT(*) AS checkIns FROM hotel_bookings WHERE check_in_date = ?`,
             [today],
