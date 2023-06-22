@@ -44,7 +44,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Box >
+    <Box justifyContent="center">
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
         Dashboard
       </Text>
@@ -95,7 +95,7 @@ const Dashboard = () => {
       <Stack>
         <Text color="teal.800" fontWeight="semibold" mt="5px">Recent Bookings</Text>
         <Box>
-        <Table bgColor="white" borderRadius="10px" shadow="lg">
+        <Table bgColor="white" borderRadius="10px" shadow="lg" width="700px">
         <Thead>
           <Tr>
             <Th>Name</Th>

@@ -18,8 +18,8 @@ import {
 import NavItem from '../components/NavItem'
 
 
-const Sidebar = ({admin}) => {
-    const [navSize, changeNavSize] = useState("large")
+const Sidebar = ({admin,navSize,changeNavSize}) => {
+    
     return (
         <Flex
             pos="sticky"
