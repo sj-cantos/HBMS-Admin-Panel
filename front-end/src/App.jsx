@@ -20,9 +20,9 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      
+    <Box bgColor="#ecf5f5" height="100%">
       <Layout/>
-      
+      </Box>
     </ChakraProvider>
   )
 }

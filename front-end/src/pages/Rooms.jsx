@@ -128,7 +128,7 @@ const Rooms = () => {
           <Input
             placeholder="Search Rooms"
             width="500px"
-            colorScheme="white"
+            bgColor="white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

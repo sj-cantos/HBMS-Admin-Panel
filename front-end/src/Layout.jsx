@@ -47,7 +47,7 @@ const Layout = () => {
         {loggedIn ? (
             <Flex w="100%" >
               <Sidebar admin={user} />
-              <Flex ml={navSize === "small" ? "20px" : "40px"} mt="20px"flex={1} mr="10px" style={{ overflowX: 'auto' }}>
+              <Flex ml={navSize === "small" ? "20px" : "40px"}  mt="20px"flex={1} mr="20px" style={{ overflowX: 'auto' }}>
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/bookings" element={<Bookings />} />

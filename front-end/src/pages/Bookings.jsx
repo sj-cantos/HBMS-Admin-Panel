@@ -33,7 +33,7 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
-  ButtonGroup
+  ButtonGroup,Badge
 } from '@chakra-ui/react';
 import { EditIcon, SearchIcon, DeleteIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
@@ -157,7 +157,7 @@ const Bookings = () => {
       <Flex justifyContent="space-between" position="relative" top="90px">
         <AddBookingModal />
         <Flex alignItems="center">
-          <Input placeholder="Search Bookings" width="500px" colorScheme="white" value={searchQuery}
+          <Input placeholder="Search Bookings" width="500px" bgColor="white" value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}/>
           <IconButton
             icon={<SearchIcon />}
@@ -201,7 +201,16 @@ const Bookings = () => {
                   <Td isNumeric width="10px">
                     {booking.num_guests}
                   </Td>
-                  <Td>{booking.status_name}</Td>
+                  <Td>
+                    {booking.status_name === 'Pending' && (
+                    <Badge colorScheme="yellow">Pending</Badge>
+                  )}
+                  {booking.status_name === 'Checked-in' && (
+                    <Badge colorScheme="green">Checked In</Badge>
+                  )}
+                  {booking.status_name === 'Checked-out' && (
+                    <Badge colorScheme="orange">Checked Out</Badge>
+                )}</Td>
                   <Td>
                     <Menu>
                       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}></MenuButton>
