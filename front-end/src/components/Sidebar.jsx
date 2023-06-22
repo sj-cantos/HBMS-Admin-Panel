@@ -24,11 +24,11 @@ const Sidebar = ({admin}) => {
         <Flex
             pos="sticky"
             top = "0"
-            left="5"
-            h="95vh"
-            marginTop="2.5vh"
+            left="0"
+            h="100vh"
+            marginTop="0vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
-            borderRadius={navSize == "small" ? "15px" : "30px"}
+            borderRightRadius="10px"
             w={navSize == "small" ? "75px" : "230px"}
             flexDir="column"
             justifyContent="space-between"
