@@ -216,7 +216,10 @@ const Bookings = () => {
                       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}></MenuButton>
                       <MenuList>
                         <MenuItem icon={<EditIcon />} onClick={() => openEditModal(booking.id)}>
-                          Edit
+                          Check-in
+                        </MenuItem>
+                        <MenuItem icon={<EditIcon />} onClick={() => openEditModal(booking.id)}>
+                          Check-out
                         </MenuItem>
                         <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteClick(booking.id)}>
                           Delete

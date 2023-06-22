@@ -67,7 +67,7 @@ const AddBookingModal = () => {
    try {
     const data = await axios.post('http://localhost:3003/booking/',newBookData)
     console.log(data)
-    setIsLoading(true);
+    
     toast({
       title: "Success",
       description: "Booking details added successfully.",

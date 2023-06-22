@@ -22,6 +22,7 @@ import axios from 'axios';
 const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingData}) => {
   const [updatedBookingData, setUpdatedBookingData] = useState(null);
   const [roomsData,setRoomsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); 
   
   
   const toast = useToast();
@@ -37,9 +38,14 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingD
   }, [bookingId, bookingData]);
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-  const isoString = date.toISOString();
-  return isoString.split('T')[0];
+    if (dateString) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return '';
   };
 
   const handleInputChange = (e) => {
@@ -58,6 +64,8 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingD
 
     }
   }, []);
+
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,7 +135,7 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingD
                   {roomsData.map((room) => (
                     <MenuItem
                       key={room.id}
-                      onClick={() => setUpdatedBookingData((prevData) => ({ ...prevData, room_type: room.name }))}
+                      onClick={() => {setUpdatedBookingData((prevData) => ({ ...prevData, room_type: room.name }))}}
                     >
                       {room.name}
                     </MenuItem>
@@ -135,11 +143,11 @@ const EditBookingModal = ({ isOpen, onClose, bookingId, bookingData, setBookingD
                 </MenuList>
               </Menu>
               <FormLabel>Book Date</FormLabel>
-              <Input name="booking_date" type='date' value={updatedBookingData?formatDate(updatedBookingData.booking_date):''} onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,booking_date: formatDate(value)}))} />
+              <Input name="booking_date" type='date' value={updatedBookingData?formatDate(updatedBookingData.booking_date):''} onChange={(e)=>{setUpdatedBookingData((prevData)=>({prevData,booking_date: formatDate(e.target.value)}))}} />
               <FormLabel>Check in</FormLabel>
-              <Input type = "date" name="check_in_date" value={updatedBookingData?formatDate(updatedBookingData.check_in_date):'' } onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,check_in_date_date: formatDate(value)}))} />
+              <Input type = "date" name="check_in_date" value={updatedBookingData?formatDate(updatedBookingData.check_in_date):'' } onChange={(e)=>setUpdatedBookingData((prevData)=>({prevData,check_in_date_date: formatDate(e.target.value)}))} />
               <FormLabel>Check out</FormLabel>
-              <Input type = "date" name="check_out_date" value={updatedBookingData?formatDate(updatedBookingData.check_out_date):''} onChange={(value)=>setUpdatedBookingData((prevData)=>({prevData,check_out_date: formatDate(value)}))} />
+              <Input type = "date" name="check_out_date" value={updatedBookingData?formatDate(updatedBookingData.check_out_date):''} onChange={(e)=>setUpdatedBookingData((prevData)=>({prevData,check_out_date: formatDate(e.target.value)}))} />
               <FormLabel>Number of guests</FormLabel>
               <Input type = "number" name="num_guests" value={updatedBookingData.num_guests} onChange={handleInputChange} />
               <FormLabel>Status</FormLabel>

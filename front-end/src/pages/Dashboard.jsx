@@ -6,30 +6,7 @@ import { AiFillBook } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import axios from 'axios'
 import { useState } from 'react';
-import Chart from 'react-apexcharts';
-
-const chartData = {
-  series: [
-    {
-      name: 'Series 1',
-      data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
-    },
-  ],
-  options: {
-    chart: {
-      type: 'area',
-    },
-    xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    fill: {
-      opacity: 0.5,
-    },
-  },
-};
+import DailyBookingChart from '../components/DailyBookingChart';
 
 
 const Dashboard = () => {
@@ -51,8 +28,10 @@ const Dashboard = () => {
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
         Dashboard
       </Text>
-      <Flex mt={6} direction={['column', 'row']} gap="4">
+      <Text color="teal.800" fontWeight="semibold" mt="5px" position="relative" top="17px">Today's Reports</Text>
+      <Flex mt={10} direction='row' gap="5">
       <Box width="250px" height="100px" bgColor="white" p={4} borderRadius="10" shadow="lg">
+        
           <Flex alignItems="center">   
             <Box ml = "10px" alignItems="center">
               <Heading  fontWeight="semibold" fontSize="18px" color="gray.500"> Bookings</Heading>  
@@ -71,7 +50,7 @@ const Dashboard = () => {
           </Flex>
         </Box>
       </Flex>
-      <Flex mt={6} direction={['column', 'row']} gap="4">
+      <Flex mt={7} direction={['column', 'row']} gap="4">
         
         <Box width="250px" height="100px" bgColor="white" p={4} borderRadius="10" shadow="lg">
           <Flex alignItems="center">   
@@ -91,8 +70,9 @@ const Dashboard = () => {
             <Icon as={BsBoxArrowInLeft} boxSize={10} color="teal"  p={1} borderRadius="10" ml="70px"/> 
           </Flex>
         </Box>
-        <Chart options={chartData.options} series={chartData.series} type="area" height={300} />
+        <Box mt="-170px"><DailyBookingChart/></Box>
       </Flex>
+      
     </Box>
   );
 };
