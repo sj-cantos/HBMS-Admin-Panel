@@ -8,4 +8,8 @@ dashboard.get('/test', checkAuth, (req, res) => {
   res.send('Hello admin ' + req.user.id);
 });
 
+dashboard.get('/',(req,res)=>{
+  
+})
+
 module.exports = dashboard;
