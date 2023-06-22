@@ -6,6 +6,31 @@ import { AiFillBook } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import axios from 'axios'
 import { useState } from 'react';
+import Chart from 'react-apexcharts';
+
+const chartData = {
+  series: [
+    {
+      name: 'Series 1',
+      data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+    },
+  ],
+  options: {
+    chart: {
+      type: 'area',
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    fill: {
+      opacity: 0.5,
+    },
+  },
+};
+
 
 const Dashboard = () => {
   // Example data for check-ins and check-outs
@@ -14,7 +39,7 @@ const Dashboard = () => {
   useEffect(()=>{
     const getWidgetData = ()=>{
       axios.get('http://localhost:3003/dashboard/widget')
-      .then(response => setWidgetData(response.data))
+      .then(response => {setWidgetData(response.data);console.log(response.data)})
       .catch((error) => console.log(error))
     }
     getWidgetData();
@@ -40,7 +65,7 @@ const Dashboard = () => {
           <Flex alignItems="center">   
             <Box ml = "10px" alignItems="center">
               <Heading  fontWeight="semibold" fontSize="18px" color="gray.500">Guests</Heading>  
-              <Text mt="5px" fontSize="25px" fontWeight="semibold">{widgetData.totalGuests}</Text> 
+              <Text mt="5px" fontSize="25px" fontWeight="semibold">{widgetData.totalGuests || 0}</Text> 
             </Box> 
             <Icon as={BsFillPeopleFill} boxSize={10} color="teal"  p={1} borderRadius="10" ml="100px"/> 
           </Flex>
@@ -66,6 +91,7 @@ const Dashboard = () => {
             <Icon as={BsBoxArrowInLeft} boxSize={10} color="teal"  p={1} borderRadius="10" ml="70px"/> 
           </Flex>
         </Box>
+        <Chart options={chartData.options} series={chartData.series} type="area" height={300} />
       </Flex>
     </Box>
   );
