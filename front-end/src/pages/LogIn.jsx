@@ -50,13 +50,14 @@ const LogIn = ({setLoggedInUser}) => {
 
   return (
     <div>
-      <form method='post'>
-      <Flex h="100vh" alignItems="center" justifyContent="center">
+  <form method='post'>
+    <Flex h="100vh" alignItems="center" justifyContent="center">
       <Flex
         flexDirection="column"
         p={12}
         borderRadius={8}
         boxShadow="lg"
+        width={500}
       >
         <Heading mb={6}>Log In</Heading>
         <Input
@@ -64,23 +65,23 @@ const LogIn = ({setLoggedInUser}) => {
           type="email"
           variant="filled"
           mb={3}
-          onChange={(e)=>{setAdminUser(e.target.value)}}
+          onChange={(e) => { setAdminUser(e.target.value) }}
         />
         <Input
           placeholder="**********"
           type="password"
           variant="filled"
           mb={6}
-          onChange={(e)=>{setPassword(e.target.value)}}
+          onChange={(e) => { setPassword(e.target.value) }}
         />
         <Button colorScheme="teal" mb={8} onClick={handleSubmit}>
           Log In
         </Button>
-      
       </Flex>
     </Flex>
-      </form>
-    </div>
+  </form>
+</div>
+
   )
 }
 
