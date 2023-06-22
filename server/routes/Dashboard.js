@@ -65,5 +65,38 @@ dashboard.get('/widget', (req, res) => {
   });
 });
 
+dashboard.get('/booking-count', (req, res) => {
+  // Construct the SQL query to fetch the 7-daily booking count
+  const query = `
+    SELECT
+      booking_date,
+      COUNT(*) as count
+    FROM
+      hotel_bookings
+    WHERE
+      booking_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    GROUP BY
+      booking_date
+    ORDER BY
+      booking_date ASC;
+  `;
+
+  // Execute the query
+  pool.execute(query, (error, results) => {
+    if (error) {
+      console.log('Error retrieving booking data:', error);
+      res.status(500).json({ error: 'Failed to retrieve booking data' });
+    } else {
+      // Prepare the data in the required format for Apex Charts
+      const bookingData = results.map((row) => ({
+        x: row.booking_date.toISOString(), // Convert to ISO string format for Apex Charts
+        y: row.count,
+      }));
+
+      res.json(bookingData);
+    }
+  });
+});
+
 
 module.exports = dashboard;
