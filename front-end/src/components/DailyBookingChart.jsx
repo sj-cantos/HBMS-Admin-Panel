@@ -50,13 +50,13 @@ const DailyBookingChart = () => {
   return (
     <div>
       <Text color="teal.800" fontWeight="semibold" mb="15px">Daily Bookings</Text>
-      <Box borderRadius = "10px"> 
+      <Box borderRadius = "10px" > 
         <ReactApexChart
             options={chartOptions}
             series={chartSeries}
             type="area"
             height={240}
-            width={600}
+            width={650}
         />
       </Box>
      
