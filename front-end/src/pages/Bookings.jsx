@@ -144,7 +144,13 @@ const Bookings = () => {
     handleDelete(id);
     setSearchQuery('');
   };
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   return (
     <Stack minWidth="100%">
       <Text>Bookings</Text>
@@ -216,18 +222,27 @@ const Bookings = () => {
         </Table>
       </TableContainer>
 
-      <ButtonGroup>
+      <ButtonGroup mt={4} spacing="4" display="flex" justifyContent="flex-end">
+        {currentPage > 1 && (
+          <Button colorScheme="teal" onClick={handlePreviousPage}>
+            Previous
+          </Button>
+        )}
         {pageNumbers.map((pageNumber) => (
           <Button
             key={pageNumber}
-            colorScheme={pageNumber === currentPage ? "teal" : "gray"}
-            onClick={() => setCurrentPage(pageNumber)}
+            colorScheme={pageNumber === currentPage ? 'teal' : 'gray'}
+            onClick={() => handlePageChange(pageNumber)}
           >
             {pageNumber}
           </Button>
         ))}
+        {currentPage < totalPages && (
+          <Button colorScheme="teal" onClick={handleNextPage}>
+            Next
+          </Button>
+        )}
       </ButtonGroup>
-
       <EditBookingModal
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
