@@ -98,5 +98,15 @@ dashboard.get('/booking-count', (req, res) => {
   });
 });
 
+dashboard.get('/recent-bookings',(req,res)=>{
+  pool.execute(`SELECT * FROM hotel_bookings ORDER by booking_date DESC LIMIT 5`,(err,results)=>{
+    if(err){
+      res.status(500).json({ error: 'Failed to retrieve booking data' });
+    } else {
+      res.json(results);
+    }
+  })
+})
+
 
 module.exports = dashboard;
