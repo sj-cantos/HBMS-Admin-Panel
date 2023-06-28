@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -17,7 +17,7 @@ import {
   IconButton,
   useToast,
   ButtonGroup,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   Menu,
   MenuButton,
@@ -27,12 +27,17 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
-} from '@chakra-ui/react';
-import { ChevronDownIcon, EditIcon, DeleteIcon, SearchIcon } from '@chakra-ui/icons';
-import axios from 'axios';
-import AddRoomModal from '../components/AddRoomModal';
-import EditRoomModal from '../components/EditRoomModal';
-import DeleteDialog from '../components/DeleteDialog';
+} from "@chakra-ui/react";
+import {
+  ChevronDownIcon,
+  EditIcon,
+  DeleteIcon,
+  SearchIcon,
+} from "@chakra-ui/icons";
+import axios from "axios";
+import AddRoomModal from "../components/AddRoomModal";
+import EditRoomModal from "../components/EditRoomModal";
+import DeleteDialog from "../components/DeleteDialog";
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
@@ -44,14 +49,17 @@ const Rooms = () => {
   const toast = useToast();
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const totalPages = Math.ceil(roomsData.length / itemsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-  
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
   useEffect(() => {
     const getRooms = () => {
       axios
-        .get('http://localhost:3003/rooms')
+        .get("http://localhost:3003/rooms")
         .then((response) => setRoomsData(response.data))
         .catch((error) => console.log(error));
     };
@@ -67,7 +75,7 @@ const Rooms = () => {
 
   const handleEditSubmit = async (updatedRoomData) => {
     try {
-      const response = await axios.put('http://localhost:3003/rooms/', {
+      const response = await axios.put("http://localhost:3003/rooms/", {
         updatedRoomData,
       });
       console.log(response.data);
@@ -112,16 +120,17 @@ const Rooms = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const filteredRooms = roomsData.filter((room) =>
-    room.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
-  return filteredRooms.slice(startIndex, endIndex);
-  };
+      room.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
+    return filteredRooms.slice(startIndex, endIndex);
+  };
 
   return (
     <Stack>
-      <Text color="teal.900" fontSize="35px" fontWeight="normal">Rooms</Text>
+      <Text color="teal.900" fontSize="35px" fontWeight="normal">
+        Rooms
+      </Text>
       <Flex justifyContent="space-between">
         <AddRoomModal />
         <Flex alignItems="center">
@@ -161,16 +170,33 @@ const Rooms = () => {
           <Tbody>
             {getPaginatedRooms().map((item) => (
               <Tr key={item.id}>
-                <Td>{String(item.id).padStart(3, '0')}</Td>
+                <Td>{String(item.id).padStart(3, "0")}</Td>
                 <Td>
-                  <Image src={item.images[0]} height={100} width={900} borderRadius="10px" />
+                  <Image
+                    src={item.images[0]}
+                    height={100}
+                    width={900}
+                    borderRadius="10px"
+                  />
                 </Td>
                 <Td>{item.name}</Td>
-                <Td sx={{ whiteSpace: 'normal', maxHeight: 'none', lineHeight: '1.1em' }}>
+                <Td
+                  sx={{
+                    whiteSpace: "normal",
+                    maxHeight: "none",
+                    lineHeight: "1.1em",
+                  }}
+                >
                   {item.description}
                 </Td>
                 <Td>
-                  <Text sx={{ whiteSpace: 'normal', maxHeight: 'none', lineHeight: '1.1em' }}>
+                  <Text
+                    sx={{
+                      whiteSpace: "normal",
+                      maxHeight: "none",
+                      lineHeight: "1.1em",
+                    }}
+                  >
                     {item.amenities}
                   </Text>
                 </Td>
@@ -179,10 +205,16 @@ const Rooms = () => {
                   <Menu>
                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />} />
                     <MenuList>
-                      <MenuItem icon={<EditIcon />} onClick={() => handleEdit(item.id)}>
+                      <MenuItem
+                        icon={<EditIcon />}
+                        onClick={() => handleEdit(item.id)}
+                      >
                         Edit
                       </MenuItem>
-                      <MenuItem icon={<DeleteIcon />} onClick={() => handleDelete(item.id)}>
+                      <MenuItem
+                        icon={<DeleteIcon />}
+                        onClick={() => handleDelete(item.id)}
+                      >
                         Delete
                       </MenuItem>
                     </MenuList>
@@ -203,7 +235,7 @@ const Rooms = () => {
         {pageNumbers.map((pageNumber) => (
           <Button
             key={pageNumber}
-            colorScheme={pageNumber === currentPage ? 'teal' : 'gray'}
+            colorScheme={pageNumber === currentPage ? "teal" : "gray"}
             onClick={() => handlePageChange(pageNumber)}
           >
             {pageNumber}

@@ -5,7 +5,7 @@ function checkAuth(req, res, next) {
   if (req.user) {
     return next();
   } else {
-    return res.status(401).json({ msg: 'Unauthorized Access', code: 401 })
+    return res.status(401).json({ msg: "Unauthorized Access", code: 401 });
   }
 }
 
