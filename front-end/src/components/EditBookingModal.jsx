@@ -173,7 +173,7 @@ const EditBookingModal = ({
                 }
                 onChange={(e) => {
                   setUpdatedBookingData((prevData) => ({
-                    prevData,
+                    ...prevData,
                     booking_date: formatDate(e.target.value),
                   }));
                 }}
@@ -189,8 +189,8 @@ const EditBookingModal = ({
                 }
                 onChange={(e) =>
                   setUpdatedBookingData((prevData) => ({
-                    prevData,
-                    check_in_date_date: formatDate(e.target.value),
+                    ...prevData,
+                    check_in_date: formatDate(e.target.value),
                   }))
                 }
               />
@@ -205,7 +205,7 @@ const EditBookingModal = ({
                 }
                 onChange={(e) =>
                   setUpdatedBookingData((prevData) => ({
-                    prevData,
+                    ...prevData,
                     check_out_date: formatDate(e.target.value),
                   }))
                 }

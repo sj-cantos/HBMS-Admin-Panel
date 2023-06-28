@@ -242,13 +242,7 @@ const Bookings = () => {
                           icon={<EditIcon />}
                           onClick={() => openEditModal(booking.id)}
                         >
-                          Check-in
-                        </MenuItem>
-                        <MenuItem
-                          icon={<EditIcon />}
-                          onClick={() => openEditModal(booking.id)}
-                        >
-                          Check-out
+                          Edit
                         </MenuItem>
                         <MenuItem
                           icon={<DeleteIcon />}
