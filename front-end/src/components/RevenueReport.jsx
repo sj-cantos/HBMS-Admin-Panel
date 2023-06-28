@@ -25,7 +25,7 @@ const RevenueReport = () => {
 
   const options = {
     chart: {
-      id: "booking-chart",
+      id: "weekly revenue",
       type: "area",
       height: 350,
       background: "white",
@@ -44,7 +44,7 @@ const RevenueReport = () => {
 
   const series = [
     {
-      name: "Revenue",
+      name: "Weekly Revenue",
       data: data,
     },
   ];
@@ -55,7 +55,8 @@ const RevenueReport = () => {
         options={options}
         series={series}
         type="area"
-        height={400}
+        height={250}
+        width={500}
       />
     </>
   );
