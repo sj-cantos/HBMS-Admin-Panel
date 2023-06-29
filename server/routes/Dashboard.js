@@ -12,8 +12,8 @@ dashboard.get("/widget", (req, res) => {
   const today = new Date().toISOString().split("T")[0];
 
   pool.execute(
-    `SELECT COUNT(*) AS totalBookings FROM hotel_bookings WHERE booking_date = ?`,
-    [today],
+    `SELECT COUNT(*) AS totalBookings FROM hotel_bookings WHERE booking_date = current_date()`,
+    
     (err, countRes) => {
       if (err) {
         res.status(500).json({ status: 500, message: "Server Error" });
@@ -22,8 +22,8 @@ dashboard.get("/widget", (req, res) => {
         const totalBookings = countRes[0].totalBookings;
 
         pool.execute(
-          `SELECT SUM(CAST(num_guests AS UNSIGNED)) AS totalGuests FROM hotel_bookings WHERE check_in_date = ?`,
-          [today],
+          `SELECT SUM(CAST(num_guests AS UNSIGNED)) AS totalGuests FROM hotel_bookings WHERE check_in_date = current_date()`,
+          
           (err, guestRes) => {
             if (err) {
               res.status(500).json({ status: 500, message: "Server Error" });
@@ -32,8 +32,8 @@ dashboard.get("/widget", (req, res) => {
               const totalGuests = guestRes[0].totalGuests;
 
               pool.execute(
-                `SELECT COUNT(*) AS checkIns FROM hotel_bookings WHERE check_in_date = ?`,
-                [today],
+                `SELECT COUNT(*) AS checkIns FROM hotel_bookings WHERE check_in_date = current_date()`,
+                
                 (err, checkInRes) => {
                   if (err) {
                     res
@@ -44,8 +44,8 @@ dashboard.get("/widget", (req, res) => {
                     const checkIns = checkInRes[0].checkIns;
 
                     pool.execute(
-                      `SELECT COUNT(*) AS checkOuts FROM hotel_bookings WHERE check_out_date = ?`,
-                      [today],
+                      `SELECT COUNT(*) AS checkOuts FROM hotel_bookings WHERE check_out_date = current_date()`,
+                      
                       (err, checkOutRes) => {
                         if (err) {
                           res
@@ -63,6 +63,7 @@ dashboard.get("/widget", (req, res) => {
                           };
 
                           res.json(response);
+                          console.log(response);
                         }
                       }
                     );
