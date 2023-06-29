@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -22,7 +22,6 @@ import {
 import axios from "axios";
 import { Menu, MenuButton, MenuList } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useEffect } from "react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
 
@@ -35,6 +34,23 @@ const AddBookingModal = () => {
   const [formErrors, setFormErrors] = useState({});
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [selectedRoomPrice, setSelectedRoomPrice] = useState();
+  const calculateTotalAmount = () => {
+    const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    const numDays = Math.round(Math.abs((checkOutDate - checkInDate) / oneDay));
+    const totalAmount = numDays * selectedRoomPrice;
+    setTotalAmount(totalAmount)
+    return totalAmount;
+  };
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [checkIn, checkOut, selectedRoomPrice]);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -53,7 +69,7 @@ const AddBookingModal = () => {
       check_in_date,
       check_out_date,
       num_guests,
-      status,
+      status,totalAmount
     } = newBookData;
 
     // Check if any required field is empty
@@ -71,13 +87,22 @@ const AddBookingModal = () => {
       return;
     }
 
+    const calculatedTotalAmount = calculateTotalAmount();
+
+    setNewBookData((prevData) => ({
+      ...prevData,
+      totalAmount: calculatedTotalAmount,
+    }));
+
     console.log(newBookData);
+    console.log(newBookData.totalAmount);
+
     try {
-      const data = await axios.post(
+      const response = await axios.post(
         "http://localhost:3003/booking/",
         newBookData
       );
-      console.log(data);
+      console.log(response.data);
 
       toast({
         title: "Success",
@@ -102,11 +127,13 @@ const AddBookingModal = () => {
     handleClose();
   };
 
-  const handleSelect = (value) => {
+  const handleSelect = (value, price) => {
     setSelectedValue(value);
     setNewBookData((prevData) => ({ ...prevData, room_type: value }));
     setFormErrors((prevErrors) => ({ ...prevErrors, room_type: "" }));
+    setSelectedRoomPrice(price);
   };
+
   const handleInputChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -181,7 +208,9 @@ const AddBookingModal = () => {
                       {roomsData.map((roomtype) => (
                         <MenuItem
                           key={roomtype.id}
-                          onClick={() => handleSelect(roomtype.name)}
+                          onClick={() =>
+                            handleSelect(roomtype.name, roomtype.price)
+                          }
                         >
                           {roomtype.name}
                         </MenuItem>
@@ -225,12 +254,13 @@ const AddBookingModal = () => {
               >
                 <FormLabel>Check-in Date</FormLabel>
                 <Input
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setNewBookData({
                       ...newBookData,
                       check_in_date: e.target.value,
-                    })
-                  }
+                    });
+                    setCheckIn(e.target.value);
+                  }}
                   type="date"
                   isRequired
                 />
@@ -247,12 +277,13 @@ const AddBookingModal = () => {
               >
                 <FormLabel>Check-out Date</FormLabel>
                 <Input
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setNewBookData({
                       ...newBookData,
                       check_out_date: e.target.value,
-                    })
-                  }
+                    });
+                    setCheckOut(e.target.value);
+                  }}
                   type="date"
                   isRequired
                 />
@@ -284,17 +315,19 @@ const AddBookingModal = () => {
                 )}
               </FormControl>
 
-              <FormControl isRequired isInvalid={Boolean(formErrors.name)}>
+              <FormControl isRequired isInvalid={Boolean(formErrors.status)}>
                 <FormLabel>Status</FormLabel>
-                <RadioGroup>
-                  <Stack
-                    spacing={5}
-                    direction="row"
-                    value={selectedStatus}
-                    onClick={(e) =>
-                      setNewBookData({ ...newBookData, status: e.target.value })
-                    }
-                  >
+                <RadioGroup
+                  value={selectedStatus}
+                  onChange={(value) => {
+                    setSelectedStatus(value);
+                    setNewBookData({
+                      ...newBookData,
+                      status: value,
+                    });
+                  }}
+                >
+                  <Stack spacing={5} direction="row">
                     <Radio colorScheme="yellow" value="Pending">
                       Pending
                     </Radio>
@@ -310,24 +343,16 @@ const AddBookingModal = () => {
                   <FormErrorMessage>{formErrors.status}</FormErrorMessage>
                 )}
               </FormControl>
+              <FormLabel>Total Amount</FormLabel>
+              <Input value={totalAmount} isReadOnly type="text" />
             </Stack>
           </ModalBody>
+
           <ModalFooter>
-            <Button variant="ghost" onClick={handleClose}>
-              Cancel
+            <Button colorScheme="blue" mr={3} onClick={handleSave}>
+              {isLoading ? <Spinner size="sm" color="white" /> : "Save Changes"}
             </Button>
-            {isLoading ? (
-              <Spinner size="md" />
-            ) : (
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={handleSave}
-                type="submit"
-              >
-                Save
-              </Button>
-            )}
+            <Button onClick={handleClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
