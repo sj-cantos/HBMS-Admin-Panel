@@ -10,12 +10,11 @@ reports.get("/test", checkAuth, (req, res) => {
 
 reports.get('/weekly-revenue', (req, res) => {
   const query = `
-    SELECT DATE_FORMAT(check_in_date, '%Y-%m') AS month,
-           DATE_SUB(check_in_date, INTERVAL (WEEKDAY(check_in_date) + 1) DAY) AS week_start_date,
-           SUM(amount_paid) AS revenue
-    FROM hotel_bookings
-    GROUP BY DATE_FORMAT(check_in_date, '%Y-%m'), DATE_SUB(check_in_date, INTERVAL (WEEKDAY(check_in_date) + 1) DAY)
-    ORDER BY month, week_start_date;
+  SELECT WEEK(booking_date) AS week_number, SUM(amount_paid) AS revenue
+  FROM hotel_bookings
+  WHERE booking_date <= CURDATE() - INTERVAL WEEKDAY(CURDATE()) DAY
+  GROUP BY WEEK(booking_date)
+  ORDER BY WEEK(booking_date);
   `;
 
   pool.query(query, (error, results) => {
