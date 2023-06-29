@@ -1,21 +1,26 @@
 import React from "react";
-import { Text, Box, Stack } from "@chakra-ui/react";
+import { Text, Box, Stack, Flex } from "@chakra-ui/react";
 import RevenueReport from "../components/RevenueReport";
 import StatusBarChart from "../components/StatusBarChart";
+import RoomDataRevenueChart from "../components/RoomDataRevenueChart";
 const Analytics = () => {
   return (
     <>
       <Box>
-        <Stack>
-          <Text color="teal.900" fontSize="35px" fontWeight="normal">
-            Analytics
-          </Text>
+        <Text color="teal.900" fontSize="35px" fontWeight="normal" pl={10}>
+          Analytics
+        </Text>
+        <Flex gap={10} pl={10}>
           <Box>
             <RevenueReport />
           </Box>
-        </Stack>
-        <StatusBarChart/>
-
+          <Box>
+            <StatusBarChart />
+          </Box>
+        </Flex>
+        <Box pl={10}>
+          <RoomDataRevenueChart />
+        </Box>
       </Box>
     </>
   );

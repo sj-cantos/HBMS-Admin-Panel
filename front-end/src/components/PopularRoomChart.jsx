@@ -29,11 +29,12 @@ const PopularRoomChart = () => {
     legend: {
       show: true,
     },
+    colors: ["#0084ff", "#00b8d9", "#00c7b6", "#00e396", "#0acf97"],
     chart: {
-      toolbar : {
+      toolbar: {
         show: true,
-      }
-    }
+      },
+    },
   };
 
   return (

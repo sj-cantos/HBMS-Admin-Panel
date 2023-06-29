@@ -65,8 +65,8 @@ const RevenueReport = () => {
           options={options}
           series={series}
           type="area"
-          height={250}
-          width={500}
+          height={320}
+          width={520}
         />
       </Stack>
     </>

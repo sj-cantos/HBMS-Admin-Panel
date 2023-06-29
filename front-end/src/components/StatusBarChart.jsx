@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import ApexCharts from 'apexcharts';
-import ReactApexChart from 'react-apexcharts';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ApexCharts from "apexcharts";
+import ReactApexChart from "react-apexcharts";
+import { Stack,Text } from "@chakra-ui/react";
 
 const StatusBarChart = () => {
   const [chartData, setChartData] = useState([]);
@@ -9,10 +10,12 @@ const StatusBarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3003/reports/status-data');
+        const response = await axios.get(
+          "http://localhost:3003/reports/status-data"
+        );
         setChartData(response.data);
       } catch (error) {
-        console.error('Error fetching chart data:', error);
+        console.error("Error fetching chart data:", error);
       }
     };
 
@@ -21,43 +24,49 @@ const StatusBarChart = () => {
 
   const chartOptions = {
     chart: {
-      type: 'bar',
+      type: "bar",
       height: 400,
       toolbar: {
         show: true,
       },
+      background: "white",
     },
     xaxis: {
-      type: 'datetime',
+      type: "datetime",
       categories: chartData.map((data) => data.date),
     },
-    
+
     series: [
       {
-        name: 'Check-ins',
+        name: "Check-ins",
         data: chartData.map((data) => data.check_ins),
       },
       {
-        name: 'Check-outs',
+        name: "Check-outs",
         data: chartData.map((data) => data.check_outs),
       },
     ],
   };
 
   return (
-    <div>
-      <h1>Hotel Check-ins and Check-outs</h1>
-      {chartData.length > 0 ? (
-        <ReactApexChart
-          options={chartOptions}
-          series={chartOptions.series}
-          type="bar"
-          height={400}
-        />
-      ) : (
-        <p>Loading chart data...</p>
-      )}
-    </div>
+    <>
+      <Stack>
+        <Text color="teal.800" fontWeight="semibold" mt="5px">
+          Daily Check-in and Check-out
+        </Text>
+        {chartData.length > 0 ? (
+          <ReactApexChart
+            options={chartOptions}
+            series={chartOptions.series}
+            type="bar"
+            height={320}
+            width={520}
+          />
+        ) : (
+          <p>Loading chart data...</p>
+        )}
+      </Stack>
+    </>
   );
 };
 
