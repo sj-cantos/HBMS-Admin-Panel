@@ -42,7 +42,10 @@ const Layout = () => {
     setLoggedIn(true);
     setUser(loggedInUser);
   };
+  const handleLogOut = () =>{
+    setLoggedIn(false);
 
+  }
   const [navSize, changeNavSize] = useState("large");
   return (
     <Box bg="white.300">
@@ -53,6 +56,7 @@ const Layout = () => {
               admin={user}
               navSize={navSize}
               changeNavSize={changeNavSize}
+              handleLogOut={handleLogOut}
             />
             <Flex
               pl={navSize === "small" ? "40px" : "20px"}

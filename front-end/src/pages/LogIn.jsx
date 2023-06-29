@@ -71,7 +71,7 @@ const LogIn = ({ setLoggedInUser }) => {
             <Heading mb={6} color="teal">
               Log In
             </Heading>
-            <Text color="gray.500">Log in as administrator</Text>
+            <Text color="gray.500" mb={4}>Log in as administrator</Text>
             <Input
               placeholder="admin@gmail.com"
               type="email"
