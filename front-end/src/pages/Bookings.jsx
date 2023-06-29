@@ -23,6 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  Box,
 } from "@chakra-ui/react";
 import {
   Menu,
@@ -50,7 +51,7 @@ import EditBookingModal from "../components/EditBookingModal";
 const Bookings = () => {
   const [bookingData, setBookingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
   const totalPages = Math.ceil(bookingData.length / itemsPerPage);
   const pageNumbers = Array.from(
     { length: totalPages },
@@ -168,98 +169,99 @@ const Bookings = () => {
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
         Bookings
       </Text>
-      <Flex justifyContent="space-between" position="relative" top="90px">
-        <AddBookingModal />
-        <Flex alignItems="center">
-          <Input
-            placeholder="Search Bookings"
-            width="500px"
-            bgColor="white"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <IconButton
-            icon={<SearchIcon />}
-            aria-label="Search"
-            ml={2}
-            bg="white"
-            color="tertiary"
-            borderColor="tertiary"
-            variant="outline"
-          />
+      <Box mt="20px">
+        <Flex justifyContent="space-between" >
+          <AddBookingModal />
+          <Flex alignItems="center">
+            <Input
+              placeholder="Search Bookings"
+              width="500px"
+              bgColor="white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <IconButton
+              icon={<SearchIcon />}
+              aria-label="Search"
+              ml={2}
+              bg="white"
+              color="tertiary"
+              borderColor="tertiary"
+              variant="outline"
+            />
+          </Flex>
         </Flex>
-      </Flex>
 
-      <TableContainer borderRadius="10px" mt="100px" boxShadow="lg">
-        <Table size="md" bg="white">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Guest Name</Th>
-              <Th>Email</Th>
-              <Th>Room Type</Th>
-              <Th>Book Date</Th>
-              <Th>Check-in</Th>
-              <Th>Check-out</Th>
-              <Th isNumeric>Guests</Th>
-              <Th>Status</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {getPaginatedBookings(bookingData).map((booking) => {
-              return (
-                <Tr key={parseInt(booking.id)}>
-                  <Td>{String(booking.id).padStart(3, "0")}</Td>
-                  <Td>{booking.guest_name}</Td>
-                  <Td>{booking.email}</Td>
-                  <Td>{booking.room_type}</Td>
-                  <Td>{getDate(booking.booking_date)}</Td>
-                  <Td>{getDate(booking.check_in_date)}</Td>
-                  <Td>{getDate(booking.check_out_date)}</Td>
-                  <Td isNumeric width="10px">
-                    {booking.num_guests}
-                  </Td>
-                  <Td>
-                    {booking.status_name === "Pending" && (
-                      <Badge colorScheme="yellow">Pending</Badge>
-                    )}
-                    {booking.status_name === "Checked-in" && (
-                      <Badge colorScheme="green">Checked In</Badge>
-                    )}
-                    {booking.status_name === "Checked-out" && (
-                      <Badge colorScheme="orange">Checked Out</Badge>
-                    )}
-                  </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
-                      ></MenuButton>
-                      <MenuList>
-                        <MenuItem
-                          icon={<EditIcon />}
-                          onClick={() => openEditModal(booking.id)}
-                        >
-                          Edit
-                        </MenuItem>
-                        <MenuItem
-                          icon={<DeleteIcon />}
-                          onClick={() => handleDeleteClick(booking.id)}
-                        >
-                          Delete
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-      </TableContainer>
-
+        <TableContainer borderRadius="10px" mt="20px" boxShadow="lg">
+          <Table size="md" bg="white">
+            <Thead>
+              <Tr>
+                <Th>ID</Th>
+                <Th>Guest Name</Th>
+                <Th>Email</Th>
+                <Th>Room Type</Th>
+                <Th>Book Date</Th>
+                <Th>Check-in</Th>
+                <Th>Check-out</Th>
+                <Th isNumeric>Guests</Th>
+                <Th>Status</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {getPaginatedBookings(bookingData).map((booking) => {
+                return (
+                  <Tr key={parseInt(booking.id)}>
+                    <Td>{String(booking.id).padStart(3, "0")}</Td>
+                    <Td>{booking.guest_name}</Td>
+                    <Td>{booking.email}</Td>
+                    <Td>{booking.room_type}</Td>
+                    <Td>{getDate(booking.booking_date)}</Td>
+                    <Td>{getDate(booking.check_in_date)}</Td>
+                    <Td>{getDate(booking.check_out_date)}</Td>
+                    <Td isNumeric width="10px">
+                      {booking.num_guests}
+                    </Td>
+                    <Td>
+                      {booking.status_name === "Pending" && (
+                        <Badge colorScheme="yellow">Pending</Badge>
+                      )}
+                      {booking.status_name === "Checked-in" && (
+                        <Badge colorScheme="green">Checked In</Badge>
+                      )}
+                      {booking.status_name === "Checked-out" && (
+                        <Badge colorScheme="orange">Checked Out</Badge>
+                      )}
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton
+                          as={Button}
+                          rightIcon={<ChevronDownIcon />}
+                        ></MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            icon={<EditIcon />}
+                            onClick={() => openEditModal(booking.id)}
+                          >
+                            Edit
+                          </MenuItem>
+                          <MenuItem
+                            icon={<DeleteIcon />}
+                            onClick={() => handleDeleteClick(booking.id)}
+                          >
+                            Delete
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
       <ButtonGroup mt={4} spacing="4" display="flex" justifyContent="flex-end">
         {currentPage > 1 && (
           <Button colorScheme="teal" onClick={handlePreviousPage}>

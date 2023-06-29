@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
 
+import { Stack,Text } from '@chakra-ui/react';
+
 const RoomDataRevenueChart = () => {
   const [chartData, setChartData] = useState([]);
 
@@ -24,11 +26,7 @@ const RoomDataRevenueChart = () => {
     xaxis: {
       categories: chartData.map((data) => data.room_type),
     },
-    yaxis: {
-      title: {
-        text: 'Revenue',
-      },
-    },
+  
     colors: ["#0084ff", "#00b8d9", "#00c7b6", "#00e396", "#0acf97"],
     legend: {
       show: false,
@@ -41,8 +39,16 @@ const RoomDataRevenueChart = () => {
   };
 
   return (
-    <div>
-      <h1>Room Revenue Data</h1>
+    <>
+    <Stack>
+      <Text
+          color="teal.800"
+          fontWeight="semibold"
+          mt="5px"
+         
+        >
+          Total Revenue per Room Type
+        </Text>
       {chartData.length > 0 ? (
         <ReactApexChart
           options={chartOptions}
@@ -53,7 +59,8 @@ const RoomDataRevenueChart = () => {
       ) : (
         <p>Loading revenue data...</p>
       )}
-    </div>
+      </Stack>
+    </>
   );
 };
 

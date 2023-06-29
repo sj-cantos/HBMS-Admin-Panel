@@ -7,7 +7,7 @@ import {
   Avatar,
   Heading,
 } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiCalendar, FiUser, FiPieChart } from "react-icons/fi";
+import { FiMenu, FiHome, FiCalendar, FiUser, FiPieChart, FiLogOut } from "react-icons/fi";
 
 import NavItem from "../components/NavItem";
 

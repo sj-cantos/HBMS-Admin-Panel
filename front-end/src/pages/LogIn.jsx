@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Flex,
   Heading,
@@ -9,49 +9,56 @@ import {
   Switch,
   useColorMode,
   useColorModeValue,
-} from "@chakra-ui/react";
-//Sample Login componenent
+  Text,
+} from '@chakra-ui/react';
+
+// Sample Login component
 const LogIn = ({ setLoggedInUser }) => {
-  const [adminUser, setAdminUser] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [feedback, setFeedback] = React.useState("");
+  const [adminUser, setAdminUser] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [feedback, setFeedback] = React.useState('');
+  const [error, setError] = React.useState('');
 
   const handleSubmit = (e) => {
-    setFeedback("");
+    e.preventDefault();
+    setFeedback('');
+    setError('');
 
-    if (adminUser && password) {
-      e.preventDefault();
-      fetch("http://localhost:3003/login", {
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "post",
-        body: JSON.stringify({
-          username: adminUser,
-          password: password,
-        }),
-      })
-        .then((response) => {
-          console.log("response = ", response);
-          if (response.status === 200) {
-            setFeedback("Login success");
-            setLoggedInUser(adminUser);
-          } else if (response.status === 401) {
-            setFeedback("Login failed, incorrect username or password");
-          } else {
-            setFeedback("Login failed, internal error occurred");
-          }
-        })
-        .catch(() => {
-          setFeedback("Login failed, try again later");
-        });
+    if (!adminUser || !password) {
+      setError('Please fill in all the fields.');
+      return;
     }
+
+    fetch('http://localhost:3003/login', {
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'post',
+      body: JSON.stringify({
+        username: adminUser,
+        password: password,
+      }),
+    })
+      .then((response) => {
+        console.log('response = ', response);
+        if (response.status === 200) {
+          setFeedback('Login success');
+          setLoggedInUser(adminUser);
+        } else if (response.status === 401) {
+          setError('Login failed, incorrect username or password');
+        } else {
+          setError('Login failed, internal error occurred');
+        }
+      })
+      .catch(() => {
+        setError('Login failed, try again later');
+      });
   };
 
   return (
-    <div>
+    <>
       <form method="post">
         <Flex h="100vh" alignItems="center" justifyContent="center">
           <Flex
@@ -61,9 +68,12 @@ const LogIn = ({ setLoggedInUser }) => {
             boxShadow="lg"
             width={500}
           >
-            <Heading mb={6}>Log In</Heading>
+            <Heading mb={6} color="teal">
+              Log In
+            </Heading>
+            <Text color="gray.500">Log in as administrator</Text>
             <Input
-              placeholder="johndoe@gmail.com"
+              placeholder="admin@gmail.com"
               type="email"
               variant="filled"
               mb={3}
@@ -72,7 +82,7 @@ const LogIn = ({ setLoggedInUser }) => {
               }}
             />
             <Input
-              placeholder="**********"
+              placeholder="Enter Password"
               type="password"
               variant="filled"
               mb={6}
@@ -83,10 +93,12 @@ const LogIn = ({ setLoggedInUser }) => {
             <Button colorScheme="teal" mb={8} onClick={handleSubmit}>
               Log In
             </Button>
+            {feedback && <Text color="green">{feedback}</Text>}
+            {error && <Text color="red">{error}</Text>}
           </Flex>
         </Flex>
       </form>
-    </div>
+    </>
   );
 };
 
