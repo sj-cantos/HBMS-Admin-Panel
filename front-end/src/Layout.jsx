@@ -55,7 +55,7 @@ const Layout = () => {
               changeNavSize={changeNavSize}
             />
             <Flex
-              ml={navSize === "small" ? "40px" : "20px"}
+              pl={navSize === "small" ? "40px" : "20px"}
               mt="20px"
               flex={1}
               mr="20px"

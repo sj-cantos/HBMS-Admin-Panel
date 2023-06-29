@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { Stack,Text } from "@chakra-ui/react";
 
 const RevenueReport = () => {
   const [chartData, setChartData] = useState([]);
@@ -7,7 +8,9 @@ const RevenueReport = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3003/reports/weekly-revenue");
+        const response = await fetch(
+          "http://localhost:3003/reports/weekly-revenue"
+        );
         const data = await response.json();
         setChartData(data);
       } catch (error) {
@@ -19,7 +22,7 @@ const RevenueReport = () => {
   }, []);
 
   const data = chartData.map((row) => ({
-    x: new Date(row.week_start_date).getTime(),
+    x: row.week_number,
     y: row.revenue,
   }));
 
@@ -31,10 +34,8 @@ const RevenueReport = () => {
       background: "white",
     },
     xaxis: {
-      type: "datetime",
-      labels: {
-        format: "dd MMM",
-      },
+      type: "text",
+      
     },
     dataLabels: {
       enabled: false,
@@ -44,20 +45,30 @@ const RevenueReport = () => {
 
   const series = [
     {
-      name: "Weekly Revenue",
+      name: "Revenue",
       data: data,
     },
   ];
 
   return (
     <>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="area"
-        height={250}
-        width={500}
-      />
+      <Stack>
+        <Text
+          color="teal.800"
+          fontWeight="semibold"
+          mt="5px"
+         
+        >
+          Weekly Revenue
+        </Text>
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="area"
+          height={250}
+          width={500}
+        />
+      </Stack>
     </>
   );
 };
