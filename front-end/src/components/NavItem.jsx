@@ -9,8 +9,10 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useState } from "react";
 
 export default function NavItem({ icon, title, active, navSize, to }) {
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <Flex
       mt={30}
@@ -26,16 +28,18 @@ export default function NavItem({ icon, title, active, navSize, to }) {
           borderRadius={8}
           _hover={{
             textDecoration: "none",
-            backgroundColor: active ? "teal.500" : "alternative",
+            backgroundColor: "teal",
           }}
           w={navSize == "large" && "100%"}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <MenuButton w="100%">
             <Flex>
-              <Icon as={icon} fontSize="xl" color="white" />
+              <Icon as={icon} fontSize="xl" color= {isHovered ? "white" : "teal"} />
               <Text
                 fontWeight="medium"
-                color="white"
+                color={isHovered ? "white" : "teal"}
                 ml={5}
                 display={navSize == "small" ? "none" : "flex"}
               >

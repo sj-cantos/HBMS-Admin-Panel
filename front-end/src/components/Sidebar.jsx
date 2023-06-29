@@ -25,7 +25,7 @@ const Sidebar = ({ admin, navSize, changeNavSize }) => {
       flexDir="column"
       justifyContent="space-between"
       transition="width 0.3s ease"
-      bgColor="tertiary"
+      bgColor="white"
     >
       <Flex
         p="5%"
@@ -38,7 +38,7 @@ const Sidebar = ({ admin, navSize, changeNavSize }) => {
           background="none"
           mt={5}
           _hover={{ background: "none" }}
-          color="white"
+          color="teal"
           icon={<FiMenu />}
           onClick={() => {
             if (navSize == "small") changeNavSize("large");
@@ -76,10 +76,10 @@ const Sidebar = ({ admin, navSize, changeNavSize }) => {
             ml={4}
             display={navSize == "small" ? "none" : "flex"}
           >
-            <Heading as="h3" size="sm" color="white">
+            <Heading as="h3" size="sm" color="teal">
               Admin
             </Heading>
-            <Text fontWeight="normal" color="white">
+            <Text fontWeight="normal" color="teal">
               {admin ? admin : "none"}
             </Text>
           </Flex>
