@@ -27,7 +27,7 @@ reports.get("/weekly-revenue", (req, res) => {
   });
 });
 
-reports.get('/status-data', (req, res) => {
+reports.get("/status-data", (req, res) => {
   const query = `SELECT 
                   check_in_date AS date,
                   COUNT(*) AS check_ins,
@@ -45,6 +45,25 @@ reports.get('/status-data', (req, res) => {
     if (error) {
       console.error("Error fetching status data:", error);
       res.status(500).json({ error: "Error fetching weekly revenue" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+reports.get("/rooms-revenue-data", (req, res) => {
+  const query = `SELECT 
+                    rt.room_type AS room_type,
+                    SUM(hb.amount_paid) AS revenue
+                  FROM hotel_bookings AS hb
+                  JOIN room_types AS rt ON hb.room_type = rt.id
+                  WHERE hb.status_id IS NOT NULL
+                  GROUP BY hb.room_type;
+                `;
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error("Error fetching rooms revenue data:", error);
+      res.status(500).json({ error: "Error fetching rooms data revenue" });
     } else {
       res.json(results);
     }
