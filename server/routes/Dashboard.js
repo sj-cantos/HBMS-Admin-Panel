@@ -22,7 +22,7 @@ dashboard.get("/widget", (req, res) => {
         const totalBookings = countRes[0].totalBookings;
 
         pool.execute(
-          `SELECT SUM(CAST(num_guests AS UNSIGNED)) AS totalGuests FROM hotel_bookings WHERE booking_date = ?`,
+          `SELECT SUM(CAST(num_guests AS UNSIGNED)) AS totalGuests FROM hotel_bookings WHERE check_in_date = ?`,
           [today],
           (err, guestRes) => {
             if (err) {
