@@ -29,6 +29,11 @@ const PopularRoomChart = () => {
     legend: {
       show: true,
     },
+    chart: {
+      toolbar : {
+        show: true,
+      }
+    }
   };
 
   return (
