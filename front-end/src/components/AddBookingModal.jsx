@@ -69,7 +69,7 @@ const AddBookingModal = () => {
       check_in_date,
       check_out_date,
       num_guests,
-      status,totalAmount
+      status
     } = newBookData;
 
     // Check if any required field is empty
@@ -86,21 +86,15 @@ const AddBookingModal = () => {
     if (Object.keys(errors).length > 0) {
       return;
     }
+    
 
-    const calculatedTotalAmount = calculateTotalAmount();
-
-    setNewBookData((prevData) => ({
-      ...prevData,
-      totalAmount: calculatedTotalAmount,
-    }));
-
-    console.log(newBookData);
-    console.log(newBookData.totalAmount);
+    
+    
 
     try {
       const response = await axios.post(
         "http://localhost:3003/booking/",
-        newBookData
+        {...newBookData, totalAmount}
       );
       console.log(response.data);
 
@@ -148,6 +142,7 @@ const AddBookingModal = () => {
     getRooms();
   }, []);
 
+  
   return (
     <div>
       <Button
