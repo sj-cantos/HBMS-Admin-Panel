@@ -232,6 +232,9 @@ const Bookings = () => {
                       {booking.status_name === "Checked-out" && (
                         <Badge colorScheme="orange">Checked Out</Badge>
                       )}
+                      {booking.status_name === "Cancelled" && (
+                        <Badge colorScheme="red">Cancelled</Badge>
+                      )}
                     </Td>
                     <Td>
                       <Menu>

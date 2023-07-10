@@ -238,6 +238,9 @@ const EditBookingModal = ({
                   <Radio colorScheme="orange" value="Checked-out">
                     Checked-out
                   </Radio>
+                  <Radio colorScheme="orange" value="Cancelled">
+                    Cancelled
+                  </Radio>
                 </Stack>
               </RadioGroup>
             </Stack>
