@@ -13,7 +13,8 @@ booking.get("/",   (req, res) => {
     `SELECT hotel_bookings.*, status.status_name,room_types.room_type
               FROM hotel_bookings
               JOIN status ON status.id = hotel_bookings.status_id
-              JOIN room_types ON room_types.id = hotel_bookings.room_type`,
+              JOIN room_types ON room_types.id = hotel_bookings.room_type
+              ORDER by  booking_date DESC`,
     (err, result) => {
       if (err) {
         res.status(500).json({ msg: "Database Error", code: 500 });
@@ -33,7 +34,8 @@ booking.post("/", (req, res) => {
     check_in_date,
     check_out_date,
     num_guests,
-    status,
+    status, 
+    totalAmount
   } = req.body;
 
   pool.execute(
@@ -55,8 +57,8 @@ booking.post("/", (req, res) => {
           roomid = roomtypeResult[0].id;
 
           pool.execute(
-            `INSERT INTO hotel_bookings(guest_name,email,room_type,booking_date,check_in_date,check_out_date,num_guests,status_id)
-                    VALUES (?,?,?,?,?,?,?,?)`,
+            `INSERT INTO hotel_bookings(guest_name,email,room_type,booking_date,check_in_date,check_out_date,num_guests,status_id,amount_paid)
+                    VALUES (?,?,?,?,?,?,?,?,?)`,
             [
               name,
               email,
@@ -66,6 +68,7 @@ booking.post("/", (req, res) => {
               check_out_date,
               num_guests,
               statusid,
+              totalAmount
             ],
             (err, result) => {
               if (err) {
