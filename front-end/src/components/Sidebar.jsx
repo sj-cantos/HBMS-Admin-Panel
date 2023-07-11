@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
+  Button, Box, HStack
 } from "@chakra-ui/react";
 import {
   FiMenu,
@@ -24,6 +24,8 @@ import {
 } from "react-icons/fi";
 
 import NavItem from "../components/NavItem";
+import logo from "../assets/hotellogo.png"
+
 
 const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -65,6 +67,7 @@ const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
         alignItems={navSize == "small" ? "center" : "flex-start"}
         as="nav"
       >
+        <HStack>
         <IconButton
           background="none"
           mt={5}
@@ -76,6 +79,9 @@ const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
             else changeNavSize("small");
           }}
         />
+        
+      </HStack>
+
         <NavItem navSize={navSize} icon={FiHome} title="Dashboard" to={"/"} />
         <NavItem
           navSize={navSize}

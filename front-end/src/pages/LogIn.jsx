@@ -9,8 +9,9 @@ import {
   Switch,
   useColorMode,
   useColorModeValue,
-  Text,
+  Text, Image, Stack
 } from '@chakra-ui/react';
+import logo from "../assets/logo.png"
 
 // Sample Login component
 const LogIn = ({ setLoggedInUser }) => {
@@ -67,11 +68,25 @@ const LogIn = ({ setLoggedInUser }) => {
             borderRadius={8}
             boxShadow="lg"
             width={500}
+            bgColor="white"
+
           >
-            <Heading mb={6} color="teal">
+            <Flex justifyContent="center" ml="-40px" >
+              <Image
+                width="190px"
+                height="100px"
+                src={logo}
+                
+              />
+            </Flex>
+            <Flex  justifyContent="center">
+            <Stack >
+            
+            <Heading mb={2} color="teal">
               Log In
             </Heading>
-            <Text color="gray.500" mb={4}>Log in as administrator</Text>
+            
+            <Text color="gray.500" mb={4} ml="-25px">Log in as administrator</Text></Stack></Flex>
             <Input
               placeholder="admin@gmail.com"
               type="email"

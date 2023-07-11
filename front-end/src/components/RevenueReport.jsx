@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { Stack,Text } from "@chakra-ui/react";
+import { Stack,Text, Box} from "@chakra-ui/react";
 
 const RevenueReport = () => {
   const [chartData, setChartData] = useState([]);
@@ -61,13 +61,15 @@ const RevenueReport = () => {
         >
           Weekly Revenue
         </Text>
+        <Box shadow="lg" borderRadius="20px" bgColor="white">
         <ReactApexChart
           options={options}
           series={series}
           type="area"
           height={320}
           width={520}
-        />
+          
+        /></Box>
       </Stack>
     </>
   );

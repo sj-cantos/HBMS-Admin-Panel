@@ -11,10 +11,10 @@ const Analytics = () => {
           Analytics
         </Text>
         <Flex gap={10} pl={10}>
-          <Box>
+          <Box >
             <RevenueReport />
           </Box>
-          <Box>
+          <Box >
             <StatusBarChart />
           </Box>
         </Flex>

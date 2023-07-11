@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ApexCharts from "apexcharts";
 import ReactApexChart from "react-apexcharts";
-import { Stack,Text } from "@chakra-ui/react";
+import { Stack,Text, Box } from "@chakra-ui/react";
 
 const StatusBarChart = () => {
   const [chartData, setChartData] = useState([]);
@@ -54,6 +54,7 @@ const StatusBarChart = () => {
         <Text color="teal.800" fontWeight="semibold" mt="5px">
           Daily Check-in and Check-out
         </Text>
+        <Box shadow="lg" borderRadius="20px" bgColor="white">
         {chartData.length > 0 ? (
           <ReactApexChart
             options={chartOptions}
@@ -64,7 +65,7 @@ const StatusBarChart = () => {
           />
         ) : (
           <p>Loading chart data...</p>
-        )}
+        )}</Box>
       </Stack>
     </>
   );
