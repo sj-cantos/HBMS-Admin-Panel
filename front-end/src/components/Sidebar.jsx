@@ -20,11 +20,11 @@ import {
   FiCalendar,
   FiUser,
   FiPieChart,
-  FiLogOut,
+  FiInbox,
 } from "react-icons/fi";
 
 import NavItem from "../components/NavItem";
-import logo from "../assets/hotellogo.png"
+
 
 
 const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
@@ -68,19 +68,19 @@ const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
         as="nav"
       >
         <HStack>
-        <IconButton
-          background="none"
-          mt={5}
-          _hover={{ background: "none" }}
-          color="teal"
-          icon={<FiMenu />}
-          onClick={() => {
-            if (navSize == "small") changeNavSize("large");
-            else changeNavSize("small");
-          }}
-        />
-        
-      </HStack>
+          <IconButton
+            background="none"
+            mt={5}
+            _hover={{ background: "none" }}
+            color="teal"
+            icon={<FiMenu />}
+            onClick={() => {
+              if (navSize == "small") changeNavSize("large");
+              else changeNavSize("small");
+            }}
+          />
+
+        </HStack>
 
         <NavItem navSize={navSize} icon={FiHome} title="Dashboard" to={"/"} />
         <NavItem
@@ -89,7 +89,7 @@ const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
           title="Bookings"
           to={"/bookings"}
         />
-        <NavItem navSize={navSize} icon={FiUser} title="Rooms" to={"/rooms"} />
+        <NavItem navSize={navSize} icon={FiInbox} title="Rooms" to={"/rooms"} />
         <NavItem
           navSize={navSize}
           icon={FiPieChart}
@@ -121,14 +121,10 @@ const Sidebar = ({ admin, navSize, changeNavSize, handleLogOut }) => {
                 {admin ? admin : "none"}
               </Text>
               <Flex ml="60px" mt="-20px">
-                <IconButton
-                  icon={<FiLogOut />}
-                  color="teal"
-                  background="none"
-                  onClick={handleDeleteOpen}
-                />
+
               </Flex>
             </Flex>
+            
           </Flex>
         </Flex>
       </Flex>

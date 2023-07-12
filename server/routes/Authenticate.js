@@ -28,8 +28,10 @@ authenticate.post("/", passport.authenticate("local"), function (req, res) {
 authenticate.delete("/signout", checkAuth, (req, res, next) => {
   req.logout((err) => {
     if (err) {
+      console.log(err);
       return next(err);
     } else {
+      req.user = null;
       res.status(200).json({ msg: "Successfully logged out", code: 200 });
     }
   });
@@ -76,6 +78,7 @@ passport.use(
             }
 
             // this is where `passport.serializeUser()`s callback parameter `user` data comes from.
+            console.log('passport.use = ', result[0]);
             return callback(null, result[0]);
           }
         );
@@ -88,6 +91,7 @@ passport.use(
 passport.serializeUser(function (user, callback) {
   process.nextTick(function () {
     // stores the new structure of the `user` data to the session table.
+    console.log('serializeUser : user = ', user);
     return callback(null, { id: user.id });
   });
 });
@@ -96,6 +100,7 @@ passport.serializeUser(function (user, callback) {
 // the `user` parameter is the extracted `user` data in the session table.
 passport.deserializeUser(function (user, callback) {
   process.nextTick(function () {
+    console.log('deserializeUser : user = ', user);
     // sets the `req.user` object on https requests after the `checkAuth` middleware.
     return callback(null, user);
   });

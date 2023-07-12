@@ -44,7 +44,7 @@ const RoomDataRevenueChart = () => {
       <Text
           color="teal.800"
           fontWeight="semibold"
-          mt="5px"
+          mt="30px"
          
         >
           Total Revenue per Room Type

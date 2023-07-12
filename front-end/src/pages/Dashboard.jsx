@@ -7,8 +7,9 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import axios from "axios";
 import { useState } from "react";
 import DailyBookingChart from "../components/DailyBookingChart";
-import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td,IconButton } from "@chakra-ui/react";
 import PopularRoomChart from "../components/PopularRoomChart";
+import { FiLogOut } from "react-icons/fi";
 
 const Dashboard = () => {
   // Example data for check-ins and check-outs
@@ -50,9 +51,12 @@ const Dashboard = () => {
 
   return (
     <Box justifyContent="center">
+      
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
-        Dashboard
+        DASHBOARD
       </Text>
+    
+      
       <Text
         color="teal.800"
         fontWeight="semibold"

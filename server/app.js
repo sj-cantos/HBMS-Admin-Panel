@@ -44,7 +44,7 @@ app.use(session({
     sameSite: false, // 'none' for production.
     secure: false, // false to enable sending cookings over HTTP, set true if deployed to production with HTTPS.
     httpOnly: true, // cookies cannot be accessed by the client side javascript code.
-    maxAge: 60000, // 60 seconds before a session expires.
+    maxAge: 60000 * 10, // 60 seconds before a session expires.
   }
 }));
 

@@ -129,7 +129,7 @@ const Rooms = () => {
   return (
     <Stack>
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
-        Rooms
+        ROOMS
       </Text>
       <Flex justifyContent="space-between">
         <AddRoomModal />

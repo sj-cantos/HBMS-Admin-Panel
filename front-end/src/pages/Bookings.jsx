@@ -167,7 +167,7 @@ const Bookings = () => {
   return (
     <Stack minWidth="100%">
       <Text color="teal.900" fontSize="35px" fontWeight="normal">
-        Bookings
+        BOOKINGS
       </Text>
       <Box mt="20px">
         <Flex justifyContent="space-between" >
@@ -224,16 +224,16 @@ const Bookings = () => {
                     </Td>
                     <Td>
                       {booking.status_name === "Pending" && (
-                        <Badge colorScheme="yellow">Pending</Badge>
+                        <Badge colorScheme="yellow" variant="solid">Pending</Badge>
                       )}
                       {booking.status_name === "Checked-in" && (
-                        <Badge colorScheme="green">Checked In</Badge>
+                        <Badge colorScheme="green" variant="solid">Checked In</Badge>
                       )}
                       {booking.status_name === "Checked-out" && (
-                        <Badge colorScheme="orange">Checked Out</Badge>
+                        <Badge colorScheme="orange" variant="solid">Checked Out</Badge>
                       )}
                       {booking.status_name === "Cancelled" && (
-                        <Badge colorScheme="red">Cancelled</Badge>
+                        <Badge colorScheme="red" variant="solid">Cancelled</Badge>
                       )}
                     </Td>
                     <Td>

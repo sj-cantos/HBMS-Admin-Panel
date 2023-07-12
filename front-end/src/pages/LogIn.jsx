@@ -61,7 +61,15 @@ const LogIn = ({ setLoggedInUser }) => {
   return (
     <>
       <form method="post">
-        <Flex h="100vh" alignItems="center" justifyContent="center">
+        <Stack h="100vh" alignItems="center" justifyContent="center">
+        <Flex justifyContent="center" ml="-40px" >
+              <Image
+                width="300px"
+                height="150px"
+                src={logo}
+                
+              />
+            </Flex>
           <Flex
             flexDirection="column"
             p={12}
@@ -71,22 +79,15 @@ const LogIn = ({ setLoggedInUser }) => {
             bgColor="white"
 
           >
-            <Flex justifyContent="center" ml="-40px" >
-              <Image
-                width="190px"
-                height="100px"
-                src={logo}
-                
-              />
-            </Flex>
+            
             <Flex  justifyContent="center">
             <Stack >
             
             <Heading mb={2} color="teal">
-              Log In
+              Welcome Back!
             </Heading>
             
-            <Text color="gray.500" mb={4} ml="-25px">Log in as administrator</Text></Stack></Flex>
+            <Text color="gray.500" mb={4} ml="45px">Log in as administrator</Text></Stack></Flex>
             <Input
               placeholder="admin@gmail.com"
               type="email"
@@ -111,7 +112,7 @@ const LogIn = ({ setLoggedInUser }) => {
             {feedback && <Text color="green">{feedback}</Text>}
             {error && <Text color="red">{error}</Text>}
           </Flex>
-        </Flex>
+        </Stack>
       </form>
     </>
   );

@@ -15,7 +15,7 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box bgColor="#ecf5f5" height="100%">
+      <Box bgColor="#f6f6f6" height="100%">
         <Layout />
       </Box>
     </ChakraProvider>

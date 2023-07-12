@@ -8,7 +8,7 @@ const Analytics = () => {
     <>
       <Box>
         <Text color="teal.900" fontSize="35px" fontWeight="normal" pl={10}>
-          Analytics
+          ANALYTICS
         </Text>
         <Flex gap={10} pl={10}>
           <Box >

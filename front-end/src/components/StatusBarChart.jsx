@@ -33,6 +33,9 @@ const StatusBarChart = () => {
     },
     xaxis: {
       type: "datetime",
+      labels: {
+        format: "dd MMM",
+      },
       categories: chartData.map((data) => data.date),
     },
 
